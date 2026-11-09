@@ -1,0 +1,16 @@
+LIBRARY D2Lang
+EXPORTS
+    ?StrNewTable_5@@YIHPAUHD2ARCHIVE__@@@Z @10000 NONAME
+    ?StrDeleteTable_xkm6@@YIXXZ @10001 NONAME
+    ?StrHashString_oi@@YGKPBDK@Z @10002 NONAME
+    ?StrGetStringByKey_8@@YIPAUUnicode@@PBD@Z @10003 NONAME
+    ?StrGetStringByIndex_nii@@YIPAUUnicode@@G@Z @10004 NONAME
+    ?StrComputeCRC_lkuc@@YGXPAGPBEKK@Z @10005 NONAME
+    ?StrGetLanguageName_xk@@YGXPADH@Z @10006 NONAME
+    ?StrGetUseLanguage_p0@@YAHXZ @10007 NONAME
+    ?StrGetSystemLanguage_7dt@@YAHXZ @10008 NONAME
+    ?StrFormatInt_4ze@@YGXPAUUnicode@@HH@Z @10009 NONAME
+    ?StrFormatUnsigned_cw6y@@YGXPAUUnicode@@IH@Z @10010 NONAME
+    ?StrFormatInt64_u2m7@@YGXPAUUnicode@@_JH@Z @10011 NONAME
+    ?StrFormatUInt64Suffix_l6@@YGXPAUUnicode@@_KH@Z @10012 NONAME
+    ?StrGetStringIndexByKey_y@@YGGPBDPAPAUUnicode@@@Z @10013 NONAME

@@ -1,0 +1,63 @@
+#ifndef D2RE_D2NET_LINKNAMES_H
+#define D2RE_D2NET_LINKNAMES_H
+
+#define ServerGetValue ServerGetValue_md2
+#define ServerNothing ServerNothing_65
+#define ClientReceiveOtherQueue ClientReceiveOtherQueue_b
+#define D2NetLocalAck D2NetLocalAck_ht1a
+#define D2NetClientClose D2NetClientClose_ss0
+#define D2NetFlush D2NetFlush_krvg
+#define D2NetGetLastError D2NetGetLastError_p0
+#define ClientReceiveThread ClientReceiveThread_xgs
+#define D2NetClientInit D2NetClientInit_4
+#define D2NetServerLocalSend D2NetServerLocalSend_6p0y
+#define ServerInject ServerInject_u
+#define ClientSetState ClientSetState_q90
+#define D2NetIsLocalHost D2NetIsLocalHost_zaq5
+#define ClientLocalReceive ClientLocalReceive_tc
+#define ServerSetUnusedHook ServerSetUnusedHook_w53c
+#define ServerClose ServerClose_a
+#define ServerReceiveClientCommand ServerReceiveClientCommand_95
+#define ServerSetBlockCallback ServerSetBlockCallback_j7
+#define ClientPollConnect ClientPollConnect_w
+#define ServerService ServerService_bl
+#define ServerGetAddress ServerGetAddress_z
+#define D2NetServerAccept D2NetServerAccept_dy5
+#define D2NetGetCltSysMsg D2NetGetCltSysMsg_q6
+#define ServerReceiveSystemMessage ServerReceiveSystemMessage_a5dl
+#define ServerSend ServerSend_h8
+#define ServerShutdown ServerShutdown_a
+#define ServerDisconnect ServerDisconnect_nj
+#define D2NetDequeue D2NetDequeue_d3
+#define D2NetServerClose D2NetServerClose_ll
+#define D2NetGetRemoteConnection D2NetGetRemoteConnection_yduz
+#define D2NetSendToServer D2NetSendToServer_g
+#define ServerWait ServerWait_bne1
+#define ClientGetLocalAddress ClientGetLocalAddress_i23m
+#define D2NetServerParse D2NetServerParse_nb
+#define ServerLocalSend ServerLocalSend_d
+#define ClientConnectThread ClientConnectThread_h5f
+#define ServerInit ServerInit_c3
+#define ClientReceiveGameMessage ClientReceiveGameMessage_4a
+#define ServerSetMaxConnections ServerSetMaxConnections_y
+#define ServerSetValue ServerSetValue_9t
+#define ServerSetBlocking ServerSetBlocking_yr8
+#define D2NetSetMode D2NetSetMode_9s
+
+#define sgfClientStop sgfClientStop_nfd
+#define sgtWsaData sgtWsaData_pes
+#define sgtClientLock sgtClientLock_jb
+#define sgptQueue1 sgptQueue1_kf
+#define sgptClient sgptClient_ec
+#define sgptQueue0 sgptQueue0_zu
+#define sgdwThreadId sgdwThreadId_v
+#define sghSocket sghSocket_dxr
+#define sghReceiveThread sghReceiveThread_ink
+#define sgdwClientState sgdwClientState_xet
+#define sgtServerAddr sgtServerAddr_kqw
+#define sgptQueue2 sgptQueue2_lrr
+#define gnD2NetMode gnD2NetMode_pu
+#define gpD2NetServer gpD2NetServer_zg
+#define gdwD2NetLocalValue gdwD2NetLocalValue_p
+
+#endif

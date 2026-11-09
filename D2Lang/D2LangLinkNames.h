@@ -1,0 +1,47 @@
+#ifndef D2RE_D2LANG_LINKNAMES_H
+#define D2RE_D2LANG_LINKNAMES_H
+
+#define StrFormatInt64 StrFormatInt64_u2m7
+#define StrGetStringByIndex StrGetStringByIndex_nii
+#define StrGetStringIndexByKey StrGetStringIndexByKey_y
+#define StrCRCInit StrCRCInit_jiw
+#define StrLocaleToLanguage StrLocaleToLanguage_q
+#define StrOpenArchives StrOpenArchives_v7
+#define StrGetSystemLanguage StrGetSystemLanguage_7dt
+#define StrGetStringByKey StrGetStringByKey_8
+#define StrGetLanguageName StrGetLanguageName_xk
+#define StrFormatUInt64Suffix StrFormatUInt64Suffix_l6
+#define StrCRCResult StrCRCResult_ko0h
+#define StrCRCUpdate StrCRCUpdate_4y
+#define StrFormatInt StrFormatInt_4ze
+#define StrGetUseLanguage StrGetUseLanguage_p0
+#define StrHashString StrHashString_oi
+#define StrComputeCRC StrComputeCRC_lkuc
+#define StrFormatUnsigned StrFormatUnsigned_cw6y
+#define StrLocaleToDirectory StrLocaleToDirectory_das
+#define StrNewTable StrNewTable_5
+#define StrGetString StrGetString_p
+#define StrAddMissing StrAddMissing_o
+#define StrDeleteTable StrDeleteTable_xkm6
+#define StrCloseArchives StrCloseArchives_g
+
+#define sgwSysMapCount sgwSysMapCount_eeq
+#define sgptSysMapPairs sgptSysMapPairs_c
+#define sgpbLeadRanges sgpbLeadRanges_sof
+#define sgszSysMapName sgszSysMapName_zu
+#define sgbNumLeadRanges sgbNumLeadRanges_xtk
+#define sgwSuffixTrillions sgwSuffixTrillions_h3g
+#define sgwSuffixThousands sgwSuffixThousands_kwkg
+#define sgwSuffixBillions sgwSuffixBillions_crbo
+#define sgwSuffixMillions sgwSuffixMillions_b1
+#define sgptMissing sgptMissing_u1j
+#define sghStringTable sghStringTable_ywj
+#define sgpUnicode sgpUnicode_liq
+#define sgpUnicodeText sgpUnicodeText_fl
+#define sgnRefCount sgnRefCount_wt9r
+#define sghD2ArchiveData sghD2ArchiveData_nysz
+#define sghD2ArchivePatch sghD2ArchivePatch_om3z
+#define sgbUseLoaded sgbUseLoaded_grbu
+#define sgnUseLanguage sgnUseLanguage_gt0
+
+#endif
