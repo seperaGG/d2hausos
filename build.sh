@@ -3,7 +3,7 @@
 set -e
 cd "$(dirname "$0")"
 T="sh $(pwd)/tools/msvc.sh"
-mkdir -p out/D2Net out/D2Lang
+mkdir -p out/D2Net out/D2Lang out/D2MCPClient
 
 # D2Net.dll
 cd D2Net
@@ -34,7 +34,21 @@ LINK_TIME="2000-05-26 18:53:13" $T link /nologo /DLL /INCREMENTAL:YES /BASE:0x10
 cp $O/D2Lang.dll ../out/D2Lang.dll
 cd ..
 
+# D2MCPClient.dll
+cd D2MCPClient
+O=../out/D2MCPClient
+$T cl /nologo /c /O2 /Ob2 /Gr /Oy /Gy /Gf /MT /W3 /FI D2MCPClientLinkNames.h /I. /I../include /Fo$O/ \
+	D2MCPClientMain.cpp D2MCPClientRecv.cpp D2MCPClientConn.cpp D2MCPClientAccess.cpp ToMCP.cpp
+for m in Fog Storm; do $T lib /nologo /def:lib/$m.def /machine:ix86 /out:$O/$m.lib >/dev/null; done
+rm -f $O/D2MCPClient.ilk ../out/D2MCPClient.dll
+LINK_TIME="2000-05-26 19:02:26" $T link /nologo /DLL /INCREMENTAL:YES /BASE:0x10000000 /MACHINE:IX86 \
+	/DEF:D2MCPClient.def /OUT:$O/D2MCPClient.dll $O/D2MCPClientMain.obj $O/D2MCPClientRecv.obj \
+	$O/D2MCPClientConn.obj $O/D2MCPClientAccess.obj $O/ToMCP.obj $O/Storm.lib $O/Fog.lib kernel32.lib
+cp $O/D2MCPClient.dll ../out/D2MCPClient.dll
+cd ..
+
 sha256sum -c <<EOF
 7876cc8dfe779102f1218a5c7352a6962c95e366ddd524e454332faf9554d0fc  out/D2Net.dll
 74ae0debb325048a1ae76f8360f5a826203fa3627fc02f8a62aaa3ae0d305a4b  out/D2Lang.dll
+2dba706661c163302c3900b1a640b6136f8954d6d3fc735d6882fc1331bfc523  out/D2MCPClient.dll
 EOF

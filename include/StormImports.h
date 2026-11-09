@@ -27,4 +27,15 @@ extern "C" DWORD __stdcall StormOrdinal503(DWORD, DWORD, DWORD);
 #define StormSStrAppend(pszDest, pszSource, dwMaxLength) \
 	StormOrdinal503((DWORD)(pszDest), (DWORD)(pszSource), (DWORD)(dwMaxLength))
 
+extern "C" DWORD __stdcall StormOrdinal405(DWORD, DWORD, DWORD, DWORD, DWORD);
+extern "C" DWORD __stdcall StormOrdinal423(DWORD, DWORD, DWORD, DWORD);
+extern "C" DWORD __stdcall StormOrdinal502(DWORD, DWORD, DWORD);
+#define StormSMemReAlloc(pMemory, dwBytes, pszFile, nLine, dwFlags) \
+	((void *)StormOrdinal405((DWORD)(pMemory), (DWORD)(dwBytes), (DWORD)(pszFile), (DWORD)(nLine), \
+		(DWORD)(dwFlags)))
+#define StormSRegLoadValue(pszKey, pszValue, dwFlags, pdwValue) \
+	((BOOL)StormOrdinal423((DWORD)(pszKey), (DWORD)(pszValue), (DWORD)(dwFlags), (DWORD)(pdwValue)))
+#define StormSStrHash(pszString, dwFlags, dwSeed) \
+	StormOrdinal502((DWORD)(pszString), (DWORD)(dwFlags), (DWORD)(dwSeed))
+
 #endif

@@ -103,4 +103,37 @@ extern "C" DWORD __fastcall FogOrdinal10079(DWORD, DWORD, DWORD, DWORD);
 #define FogSafesockGetStormFileSizeRaw FogOrdinal10078
 #define FogSafesockSetStormFilePointerRaw FogOrdinal10079
 
+extern "C" DWORD __cdecl FogOrdinal10016(...);
+extern "C" DWORD __cdecl FogOrdinal10020(...);
+extern "C" DWORD __cdecl FogOrdinal10023(...);
+extern "C" DWORD __cdecl FogOrdinal10026(...);
+extern "C" DWORD __fastcall FogOrdinal10066(DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD);
+extern "C" DWORD __fastcall FogOrdinal10067(DWORD, DWORD);
+extern "C" DWORD __fastcall FogOrdinal10069(DWORD, DWORD);
+extern "C" DWORD __fastcall FogOrdinal10070(DWORD, DWORD);
+extern "C" DWORD __fastcall FogOrdinal10072(DWORD, DWORD);
+extern "C" DWORD __fastcall FogOrdinal10140(DWORD, DWORD, DWORD, DWORD, DWORD);
+extern "C" DWORD __fastcall FogOrdinal10141(DWORD, DWORD, DWORD, DWORD, DWORD);
+
+extern "C" __declspec(dllimport) DWORD gdwBitMasks[];
+#define FogDataArraysSprintf FogOrdinal10016
+#define FogErrorManagerGetSysInfo() ((void *)FogOrdinal10020())
+#define FogErrorManagerWarnRaw FogOrdinal10023
+#define FogErrorManagerLog FogOrdinal10026
+#define FogAsyncDataLoadRaw FogOrdinal10066
+#define FogAsyncDataIsLoaded(ptAsyncData) ((BOOL)FogOrdinal10067((DWORD)(ptAsyncData), 0))
+#define FogAsyncDataGetBuffer(ptAsyncData) ((BYTE *)FogOrdinal10069((DWORD)(ptAsyncData), 0))
+#define FogAsyncDataGetSize(ptAsyncData) FogOrdinal10070((DWORD)(ptAsyncData), 0)
+#define FogAsyncDataFree(ptAsyncData) FogOrdinal10072((DWORD)(ptAsyncData), 0)
+#define FogErrorManagerPoolAllocRaw FogOrdinal10140
+#define FogErrorManagerPoolFreeRaw FogOrdinal10141
+#define FogSafesockOpenStormFile(dwFileName, dwFileHandleOut) \
+	FogOrdinal10075((DWORD)(dwFileName), (DWORD)(dwFileHandleOut))
+#define FogSafesockCloseStormFile(dwArg) FogOrdinal10076((DWORD)(dwArg))
+#define FogSafesockReadStormFile(dwFile, dwBuffer, dwBytes, dwBytesReadOut, dwOverlapped, dwCallback) \
+	FogOrdinal10077((DWORD)(dwFile), (DWORD)(dwBuffer), (DWORD)(dwBytes), (DWORD)(dwBytesReadOut), \
+		(DWORD)(dwOverlapped), (DWORD)(dwCallback))
+#define FogSafesockGetStormFileSize(dwFile, dwFileSizeHighOut) \
+	FogOrdinal10078((DWORD)(dwFile), (DWORD)(dwFileSizeHighOut))
+
 #endif
