@@ -2,7 +2,6 @@
 #include "StormImports.h"
 
 #pragma pack(push, 1)
-
 struct D2MCPREPLYSTATUS
 {
  	BYTE		bId;
@@ -240,7 +239,6 @@ BOOL __fastcall D2MCPOnGameDetailsReply(BYTE *pbMsg, DWORD dwLength)
 		pszDescription = pszText;
 		pszText += strlen(pszText) + 1;
 		strcpy(gtMCP.tGame.szDescription, pszDescription);
-
 		for (i = 0; i < ptReply->bCount; i++)
 		{
 			gtMCP.tGame.awClasses[i] = ptReply->abClasses[i];

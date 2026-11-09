@@ -12,11 +12,9 @@ static HANDLE __fastcall ArchiveOpenStorm(char *pszPath, const char *pszModule, 
 	const char *pszKey, DWORD dwPriority);
 static BOOL __fastcall ArchiveSearchCDs(char *pszPath, const char *pszArchive, DWORD dwPriority,
 	HANDLE *phArchive);
-
 BOOL __fastcall ArchiveOpenFile(HD2ARCHIVE hArchive, const char *pszFileName, HANDLE *phFile,
 	BOOL fAllowMissing)
 {
-
 	if (FogSafesockOpenStormFileRaw((DWORD)pszFileName, (DWORD)phFile))
 		return TRUE;
 	if (fAllowMissing && GetLastError() == ERROR_FILE_NOT_FOUND)
@@ -26,14 +24,12 @@ BOOL __fastcall ArchiveOpenFile(HD2ARCHIVE hArchive, const char *pszFileName, HA
 	exit(-1);
 	return FALSE;
 }
-
 DWORD __fastcall ArchiveCloseFile(HD2ARCHIVE hArchive, HANDLE hFile)
 {
 #line 70
 	D2ASSERT(hFile);
 	return FogSafesockCloseStormFileRaw((DWORD)hFile);
 }
-
 DWORD __fastcall ArchiveGetFileSize(HD2ARCHIVE hArchive, HANDLE hFile, DWORD *pdwFileSizeHigh)
 {
 	DWORD dwSize;
@@ -44,7 +40,6 @@ DWORD __fastcall ArchiveGetFileSize(HD2ARCHIVE hArchive, HANDLE hFile, DWORD *pd
 	dwSize = FogSafesockGetStormFileSizeRaw((DWORD)hFile, (DWORD)pdwFileSizeHigh);
 	if (!dwSize)
 	{
-
 		StormSFileGetFileName(hFile, szFileName, MAX_PATH);
 #line 92
 		FogErrorManagerError(3, szFileName, D2_THIS_FILE, __LINE__);
@@ -71,7 +66,6 @@ DWORD __fastcall ArchiveSeekFile(HD2ARCHIVE hArchive, HANDLE hFile, LONG lDistan
 	}
 	return dwPosition;
 }
-
 BOOL __fastcall ArchiveReadFile(HD2ARCHIVE hArchive, HANDLE hFile, void *pBuffer, DWORD dwBytesToRead)
 {
 	DWORD dwBytes;
@@ -105,7 +99,6 @@ DWORD __fastcall ArchiveReadFileInto(HD2ARCHIVE hArchive, const char *pszFileNam
 	ArchiveCloseFile(hArchive, hFile);
 	return dwDestSize;
 }
-
 void * __fastcall ArchiveAllocBufferAndRead(HD2ARCHIVE hArchive, const char *pszFileName, DWORD *pdwSize,
 	const char *pszFile, int nLine)
 {
@@ -116,7 +109,6 @@ void * __fastcall ArchiveAllocBufferAndRead(HD2ARCHIVE hArchive, const char *psz
 
 	ArchiveOpenFile(hArchive, pszFileName, &hFile, FALSE);
 	dwSize = ArchiveGetFileSize(hArchive, hFile, &dwSizeHigh);
-
 	pBuffer = FogErrorManagerAlloc(dwSize + 800, pszFile, nLine, 0);
 	if (!pBuffer)
 		return NULL;
@@ -150,7 +142,6 @@ HD2ARCHIVE __fastcall ArchiveOpen(const char *pszModule, const char *pszArchive,
 	}
 	return hArchive;
 }
-
 static HANDLE __fastcall ArchiveOpenStorm(char *pszPath, const char *pszModule, const char *pszArchive,
 	const char *pszKey, DWORD dwPriority)
 {
@@ -172,7 +163,6 @@ static HANDLE __fastcall ArchiveOpenStorm(char *pszPath, const char *pszModule, 
 		return hArchive;
 	return NULL;
 }
-
 static BOOL __fastcall ArchiveSearchCDs(char *pszPath, const char *pszArchive, DWORD dwPriority,
 	HANDLE *phArchive)
 {
@@ -202,7 +192,6 @@ static BOOL __fastcall ArchiveSearchCDs(char *pszPath, const char *pszArchive, D
 	}
 	return FALSE;
 }
-
 void __fastcall ArchiveClose(HD2ARCHIVE hArchive)
 {
 	if (hArchive->hStormArchive)

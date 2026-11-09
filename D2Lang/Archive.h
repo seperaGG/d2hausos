@@ -29,7 +29,6 @@ HD2ARCHIVE __fastcall ArchiveOpen(const char *pszModule, const char *pszArchive,
 void __fastcall ArchiveClose(HD2ARCHIVE hArchive);
 
 DWORD __fastcall StringLength(LPCTSTR pszString);
-
 int __cdecl ArchiveBitFindFirstSet(DWORD dwValue);
 
 #endif

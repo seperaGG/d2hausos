@@ -15,10 +15,8 @@
 struct D2QSSOCKET;
 
 typedef BOOL (__fastcall *D2MCPRECV)(BYTE *pbMsg, DWORD dwLength);
-
 typedef void (__fastcall *D2MCPWORDCALLBACK)(WORD wValue, BYTE *pbData);
 typedef void (__fastcall *D2MCPLADDERCALLBACK)(DWORD dwCount, DWORD dwSize, BYTE *pbEntries);
-
 typedef void (__fastcall *D2MCPNEWSCALLBACK)(DWORD dwType, DWORD dwLength, BYTE *pbData);
 
 struct D2MCPCONNECT
@@ -56,7 +54,6 @@ struct D2MCPGAMEQUERY
 struct D2MCPGAMEINFO
 {
  	BOOL		fTrailingData;
-
  	WORD		wToken;
  	WORD		unobserved_06;
  	DWORD		dwGameKey;
@@ -66,7 +63,6 @@ struct D2MCPGAMEINFO
  	BYTE		bMaxPlayers;
  	BYTE		unobserved_13;
  	DWORD		dwNumPlayers;
-
  	DWORD		dwStatus;
  	char		szGameName[16];
  	char		szDescription[32];
@@ -103,22 +99,17 @@ extern D2MCPLADDERBLOCK gtLadderBlock;
 struct D2MCPGLOBALS
 {
  	BOOL		fReply0C;
-
  	DWORD		dwReply0E;
  	BOOL		fReply0B;
-
  	BYTE		unobserved_26a4[32];
  	char		szGameAddress[18];
-
  	WORD		wReplyToken;
  	BOOL		fReply02;
-
  	DWORD		dwGameId;
  	WORD		wToken;
  	WORD		unobserved_26e2;
  	DWORD		dwGameToken;
  	BOOL		fReply0D;
-
  	char		szReply0E1[36];
  	DWORD		dwStatus;
  	DWORD		unobserved_2714;
@@ -126,14 +117,11 @@ struct D2MCPGLOBALS
  	BOOL		fReply10;
  	D2QSSOCKET	*ptSocket;
  	BOOL		fReply0F;
-
  	DWORD		unobserved_27dc;
  	D2MCPGAMEINFO	tGame;
  	char		szReply0E2[28];
  	BOOL		fReply0A;
-
  	BOOL		fReply07;
-
  	DWORD		unobserved_2990;
  	HANDLE		hReplyEvent;
 };

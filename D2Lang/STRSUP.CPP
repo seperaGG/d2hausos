@@ -24,7 +24,6 @@ int __fastcall Unicode::strcmp(const Unicode *pszStr1, const Unicode *pszStr2)
 		return -1;
 	return wSecond < wFirst;
 }
-
 int __fastcall Unicode::stricmp(const Unicode *pszStr1, const Unicode *pszStr2)
 {
 	unsigned short wUp1;
@@ -43,7 +42,6 @@ int __fastcall Unicode::stricmp(const Unicode *pszStr1, const Unicode *pszStr2)
 		return 1;
 	return pszStr2->wUnit ? -1 : 0;
 }
-
 int __fastcall Unicode::strnicmp(const Unicode *pszStr1, const Unicode *pszStr2, unsigned int nCount)
 {
 	Unicode tUp1;
@@ -64,15 +62,12 @@ int __fastcall Unicode::strnicmp(const Unicode *pszStr1, const Unicode *pszStr2,
 		return -1;
 	return tUp2.wUnit < tUp1.wUnit;
 }
-
 Unicode * __fastcall Unicode::strchr(const Unicode *pszStr, Unicode tChar)
 {
 	while (pszStr->wUnit && pszStr->wUnit != tChar)
 		pszStr++;
-
 	return pszStr->wUnit ? (Unicode *)pszStr : NULL;
 }
-
 Unicode * __fastcall Unicode::strcat(Unicode *pszDst, const Unicode *pszSrc)
 {
 	Unicode *pszCur = pszDst;
@@ -86,7 +81,6 @@ Unicode * __fastcall Unicode::strcat(Unicode *pszDst, const Unicode *pszSrc)
 	} while ((pszSrc++)->wUnit);
 	return pszDst;
 }
-
 Unicode * __fastcall Unicode::strncat(Unicode *pszDst, const Unicode *pszSrc, int nCount)
 {
 	Unicode *pszCur = pszDst;
@@ -103,7 +97,6 @@ Unicode * __fastcall Unicode::strncat(Unicode *pszDst, const Unicode *pszSrc, in
 	pszCur->wUnit = 0;
 	return pszDst;
 }
-
 Unicode * __fastcall Unicode::strncpy(Unicode *pszDst, const Unicode *pszSrc, int nCount)
 {
 	Unicode *pszCur = pszDst;
@@ -123,7 +116,6 @@ Unicode * __fastcall Unicode::strncpy(Unicode *pszDst, const Unicode *pszSrc, in
 	}
 	return pszDst;
 }
-
 Unicode * __fastcall Unicode::strcpy(Unicode *pszDst, const Unicode *pszSrc)
 {
 	Unicode *pszCur = pszDst;
@@ -135,7 +127,6 @@ Unicode * __fastcall Unicode::strcpy(Unicode *pszDst, const Unicode *pszSrc)
 	} while ((pszSrc++)->wUnit);
 	return pszDst;
 }
-
 int __fastcall Unicode::strlen(const Unicode *pszStr)
 {
 	int nLength = 0;
@@ -149,7 +140,6 @@ int __fastcall Unicode::strlen(const Unicode *pszStr)
 	}
 	return nLength;
 }
-
 const Unicode * __fastcall Unicode::strstri(const Unicode *pszStr, const Unicode *pszSub)
 {
 	Unicode tCur;
@@ -157,7 +147,6 @@ const Unicode * __fastcall Unicode::strstri(const Unicode *pszStr, const Unicode
 
 	if (!pszStr || !pszSub)
 		return NULL;
-
 	tCur = *pszStr;
 	for (;;)
 	{
@@ -183,7 +172,6 @@ const Unicode * __fastcall Unicode::strstri(const Unicode *pszStr, const Unicode
 		pszSub -= nMatched;
 	}
 }
-
 const Unicode * __fastcall Unicode::strstr(const Unicode *pszStr, const Unicode *pszSub)
 {
 	int nMatched;
@@ -196,7 +184,6 @@ const Unicode * __fastcall Unicode::strstr(const Unicode *pszStr, const Unicode 
 	{
 		while (*pszStr != *pszSub && *pszStr)
 			pszStr++;
-
 		if (!pszStr->wUnit)
 			return NULL;
 		nMatched = 0;
@@ -218,7 +205,6 @@ const Unicode * __fastcall Unicode::strstr(const Unicode *pszStr, const Unicode 
 		pszSub -= nMatched;
 	}
 }
-
 void __cdecl Unicode::sprintf(int nMax, Unicode *pszDst, const Unicode *pszFormat, ...)
 {
 	va_list pArgs;
@@ -249,7 +235,6 @@ void __cdecl Unicode::sprintf(int nMax, Unicode *pszDst, const Unicode *pszForma
 		tSpec = 0;
 		wPercent[0] = '%';
 		wPercent[1] = 0;
-
 		puFound = strstr(pszFormat, (Unicode *)wPercent);
 		if (puFound)
 		{
@@ -313,7 +298,6 @@ void __cdecl Unicode::sprintf(int nMax, Unicode *pszDst, const Unicode *pszForma
 				nLen += nArgLen;
 				break;
 			}
-
 			nRemain = nMax - nLen - 1;
 			pszEnd = pszDst;
 			while (pszEnd->wUnit)
@@ -334,7 +318,6 @@ void __cdecl Unicode::sprintf(int nMax, Unicode *pszDst, const Unicode *pszForma
 			nLen++;
 			break;
 		case 0:
-
 			strcpy(pszDst, (Unicode *)wPercent);
 			return;
 		default:

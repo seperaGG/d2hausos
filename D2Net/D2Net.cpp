@@ -7,7 +7,6 @@ extern const char *const gpszD2NetDllName = "D2NET.DLL";
 
 int gnD2NetMode;
 BYTE *gpD2NetServer;
-
 DWORD gdwD2NetLocalValue;
 
 BOOL __cdecl D2NetIsLocal(void)

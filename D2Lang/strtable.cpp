@@ -28,7 +28,6 @@ static int sgnUseLanguage;
 const char *const sgpszStringTableFormat = "data\\local\\lng\\%s\\string.tbl";
 const char *const sgpszSysMapFormat = "data\\local\\font\\%s\\default.map";
 const char *const sgpszDefaultLanguage = "ENG";
-
 const char *const sgpszD2DataArchive = "d2data.mpq";
 const char *const sgpszPatchArchive = "patch_d2.mpq";
 const char *const sgpszProbeFile = "DATA\\DUMMY";
@@ -106,7 +105,6 @@ BOOL __cdecl StrOpenArchives(void)
 	}
 	return TRUE;
 }
-
 void __cdecl StrCloseArchives(void)
 {
 	if (sghD2ArchiveData)
@@ -120,7 +118,6 @@ void __cdecl StrCloseArchives(void)
 		sghD2ArchivePatch = NULL;
 	}
 }
-
 Unicode * __fastcall StrGetString(STRTABLEHEADER *hStringTable, Unicode **pUnicode, WORD usStr)
 {
 	STRTABLEHEADER *pHeader = hStringTable;
@@ -144,11 +141,9 @@ Unicode * __fastcall StrGetString(STRTABLEHEADER *hStringTable, Unicode **pUnico
 
 static __inline void StrFreeTable(void *pTable)
 {
-
 #line 264
 	D2FREE2(pTable);
 }
-
 DWORD __stdcall StrHashString(const char *pszKey, DWORD dwTableSize)
 {
 	DWORD dwHash = 0;
@@ -167,7 +162,6 @@ DWORD __stdcall StrHashString(const char *pszKey, DWORD dwTableSize)
 	}
 	return dwHash % dwTableSize;
 }
-
 BOOL __fastcall StrNewTable(HD2ARCHIVE hArchive)
 {
 	char szLanguage[4];
@@ -190,7 +184,6 @@ BOOL __fastcall StrNewTable(HD2ARCHIVE hArchive)
 		return TRUE;
 	}
 	StrGetLanguageName(szLanguage, 0);
-
 	if (!stricmp(szLanguage, "JPN"))
 		::strcpy(szDirectory, "JPN");
 	else if (!stricmp(szLanguage, "KOR"))
@@ -208,7 +201,6 @@ BOOL __fastcall StrNewTable(HD2ARCHIVE hArchive)
 	pHeader = (STRTABLEHEADER *)
 #line 169
 		ArchiveAllocBufferAndRead(sghD2ArchiveData, szPath, NULL, D2_THIS_FILE, __LINE__);
-
 	{
 		DWORD dwIndexEnd = pHeader->dwFileLen;
 		DWORD dwIndexStart = pHeader->dwIndexStart;
@@ -262,7 +254,6 @@ BOOL __fastcall StrNewTable(HD2ARCHIVE hArchive)
 		Unicode::toUnicode(sgpUnicode[i], pszText, nUnits);
 		pszCur += nUnits;
 	}
-
 	{
 		char szChar[8];
 		Unicode *pszSuffix;
@@ -302,14 +293,12 @@ BOOL __fastcall StrNewTable(HD2ARCHIVE hArchive)
 	}
 	return TRUE;
 }
-
 Unicode * __fastcall StrGetStringByIndex(WORD wStringId)
 {
 #line 439
 	D2ASSERT(sghStringTable != NULL);
 	return StrGetString(sghStringTable, sgpUnicode, wStringId);
 }
-
 Unicode * __fastcall StrAddMissing(const char *pszKey)
 {
 	STRMISSING *ptMissing;
@@ -365,7 +354,6 @@ WORD __stdcall StrGetStringIndexByKey(const char *pszKey, Unicode **ppString)
 	}
 	pNodes = (STRTABLENODE *)((WORD *)((BYTE *)sghStringTable + sizeof(STRTABLEHEADER)) +
 		sghStringTable->usNumElements);
-
 	{
 		const char *pszHash = pszKey;
 		DWORD dwHash = 0;
@@ -400,7 +388,6 @@ WORD __stdcall StrGetStringIndexByKey(const char *pszKey, Unicode **ppString)
 	*ppString = StrAddMissing(pszKey);
 	return 0;
 }
-
 Unicode * __fastcall StrGetStringByKey(const char *pszKey)
 {
 	Unicode *pszString = NULL;
@@ -408,7 +395,6 @@ Unicode * __fastcall StrGetStringByKey(const char *pszKey)
 	StrGetStringIndexByKey(pszKey, &pszString);
 	return pszString;
 }
-
 void __fastcall StrDeleteTable(void)
 {
 	STRMISSING *ptMissing;
@@ -457,7 +443,6 @@ WORD __fastcall StrCRCResult(WORD usCRC)
 {
 	return usCRC;
 }
-
 void __stdcall StrComputeCRC(WORD *pusCRC, const BYTE *pbData, DWORD dwIndexStart, DWORD dwIndexEnd)
 {
 #line 814
@@ -497,7 +482,6 @@ int __fastcall StrLocaleToLanguage(const char *pszLanguage)
 	}
 	return 0;
 }
-
 int __cdecl StrGetUseLanguage(void)
 {
 	BYTE *pbUse;
@@ -516,7 +500,6 @@ int __cdecl StrGetUseLanguage(void)
 	}
 	return sgnUseLanguage;
 }
-
 int __cdecl StrGetSystemLanguage(void)
 {
 	HKEY hKey;
@@ -558,7 +541,6 @@ int __cdecl StrGetSystemLanguage(void)
 	}
 	return 0;
 }
-
 void __stdcall StrGetLanguageName(char *pszDst, int eField)
 {
 	int nLanguage;
@@ -652,12 +634,10 @@ void __stdcall StrFormatInt(Unicode *pszDst, int nValue, int nMaxLength)
 			return;
 		}
 	}
-
 	*(DWORD *)&pszDst = 0;
 	Unicode::toUnicode((Unicode *)&pszDst, "*", 2);
 	Unicode::strcpy(pszCur, (Unicode *)&pszDst);
 }
-
 void __stdcall StrFormatUnsigned(Unicode *pszDst, unsigned int nValue, int nMaxLength)
 {
 	char szNumber[64];
@@ -696,12 +676,10 @@ void __stdcall StrFormatUnsigned(Unicode *pszDst, unsigned int nValue, int nMaxL
 			return;
 		}
 	}
-
 	*(DWORD *)(&nValue + 1) = 0;
 	Unicode::toUnicode((Unicode *)(&nValue + 1), "*", 2);
 	Unicode::strcpy(pszDst, (Unicode *)(&nValue + 1));
 }
-
 void __stdcall StrFormatInt64(Unicode *pszDst, __int64 nValue, int nMaxLength)
 {
 	char szNumber[64];
@@ -754,12 +732,10 @@ void __stdcall StrFormatInt64(Unicode *pszDst, __int64 nValue, int nMaxLength)
 			return;
 		}
 	}
-
 	*(DWORD *)&pszDst = 0;
 	Unicode::toUnicode((Unicode *)&pszDst, "*", 2);
 	Unicode::strcpy(pszCur, (Unicode *)&pszDst);
 }
-
 void __stdcall StrFormatUInt64Suffix(Unicode *pszDst, unsigned __int64 nValue, int nMaxLength)
 {
 	char szNumber[64];
@@ -777,7 +753,6 @@ void __stdcall StrFormatUInt64Suffix(Unicode *pszDst, unsigned __int64 nValue, i
 	nLen = ::strlen(szNumber);
 	if (nLen)
 	{
-
 		nSuffix = (nLen - 1) / 3 - 1;
 		if (nSuffix >= 4)
 			nSuffix = 4;

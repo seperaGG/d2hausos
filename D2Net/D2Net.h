@@ -12,7 +12,6 @@ struct D2NETHDR
 {
  	BYTE		bMagic;
  	BYTE		bQueue;
-
  	WORD		wSize;
 };
 
@@ -27,7 +26,6 @@ struct D2NETMSG
  	BYTE		abData[MAX_MSG_SIZE];
  	int			nSize;
  	DWORD		dwQueuedTick;
-
  	D2NETMSG	*ptNext;
 };
 

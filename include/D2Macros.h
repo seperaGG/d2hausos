@@ -8,7 +8,6 @@
 
 #ifndef D2_THIS_FILE
 #error "D2_THIS_FILE must be defined per translation unit"
-
 #define D2_OPAQUE(x)	((void)0)
 #define arrsize(a)		(sizeof(a) / sizeof((a)[0]))
 

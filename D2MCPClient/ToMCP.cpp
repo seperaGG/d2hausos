@@ -1,12 +1,10 @@
 #include <stddef.h>
 #include <limits.h>
-
 #define D2_THIS_FILE "C:\\D2\\Source\\D2MCPClient\\Src\\ToMCP.cpp"
 #include "D2MCPClient.h"
 #include "D2Macros.h"
 
 #pragma pack(push, 1)
-
 struct D2MCPMSG01
 {
  	BYTE		bId;

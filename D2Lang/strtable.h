@@ -24,12 +24,10 @@ struct STRTABLENODE
 {
  	BYTE		bUsed;
  	WORD		wStringIndex;
-
  	BYTE		unobserved_2[4];
  	DWORD		dwKeyOffset;
  	DWORD		dwStringOffset;
  	WORD		wStringLength;
-
 };
 
 #pragma pack(pop)
@@ -48,7 +46,6 @@ typedef struct LOCALE LOCALE, *PTLOCALE;
 struct LOCALE
 {
  	const char	*pszSystemLanguage;
-
  	const char	*pszDirectory;
  	const char	*pszFallbackLanguage;
  	const char	*pszRegion;

@@ -12,10 +12,8 @@ int Unicode::isLeftToRight(void) const
 	}
 	return 0;
 }
-
 int __fastcall Unicode::isLineBreak(const Unicode *pszStr, unsigned int nIndex)
 {
-
 	if (nIndex)
 	{
 		if (!isspace(pszStr[nIndex]) && isspace(pszStr[nIndex - 1]))
@@ -24,7 +22,6 @@ int __fastcall Unicode::isLineBreak(const Unicode *pszStr, unsigned int nIndex)
 	}
 	return 1;
 }
-
 Unicode * __fastcall Unicode::win2Unicode(Unicode *pszDst, const char *pszSrc, int nCount)
 {
 	int i = 0;
@@ -43,14 +40,12 @@ Unicode * __fastcall Unicode::win2Unicode(Unicode *pszDst, const char *pszSrc, i
 				break;
 		}
 	}
-
 	if (pszSrc[i])
 		pszDst[i - 1].wUnit = 0;
 	else
 		pszDst[i].wUnit = 0;
 	return pszDst;
 }
-
 char * __fastcall Unicode::unicode2Win(char *pszDst, const Unicode *pszSrc, int nCount)
 {
 	char *pszCur = pszDst;
@@ -63,7 +58,6 @@ char * __fastcall Unicode::unicode2Win(char *pszDst, const Unicode *pszSrc, int 
 	*pszCur = 0;
 	return pszDst;
 }
-
 Unicode::Direction Unicode::directionality(void)
 {
 	if (wUnit >= 1424 && wUnit <= 2303)
@@ -131,7 +125,6 @@ static unsigned short sgwCollateWeight[256] =
 	289, 270, 271, 271, 271, 271, 287, 247,
 	284, 277, 277, 277, 277, 281, 290, 281
 };
-
 int __fastcall Unicode::strncoll(const Unicode *pszStr1, const Unicode *pszStr2, int nCount)
 {
 	const Unicode *pszCur1 = pszStr1;
@@ -145,7 +138,6 @@ int __fastcall Unicode::strncoll(const Unicode *pszStr1, const Unicode *pszStr2,
 		{
 			if (!pszCur2->wUnit || pszCur1 - pszStr1 >= nCount)
 				break;
-
 			wUnit1 = pszCur1->wUnit;
 			if (wUnit1 < 256 && pszCur2->wUnit < 256)
 				nDiff = sgwCollateWeight[wUnit1] - sgwCollateWeight[pszCur2->wUnit];
@@ -161,6 +153,5 @@ int __fastcall Unicode::strncoll(const Unicode *pszStr1, const Unicode *pszStr2,
 	}
 	if (pszCur1 - pszStr1 < nCount && pszCur1->wUnit != pszCur2->wUnit)
 		return pszCur1->wUnit ? 1 : -1;
-
 	return strnicmp(pszStr1, pszStr2, nCount);
 }

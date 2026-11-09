@@ -30,7 +30,6 @@ static __inline int __fastcall UnisysEncodeUtf(char *pszOut, Unicode tChar);
 
 static __inline int UnisysDecodeUtf(Unicode *pszOut, const char *pszSrc, int nBytes)
 {
-
 	const UTFTABLE *ptEntry;
 	short sLead;
 	short sNext;
@@ -82,7 +81,6 @@ Unicode * __fastcall Unicode::toUnicode(Unicode *pszDst, const char *pszSrc, int
 			if (nUnits >= nLimit)
 				break;
 			nLen = UnisysDecodeUtf(pszCur, pszSrc + nOffset, nSrcLen - nOffset);
-
 			nUnits++;
 			pszCur++;
 			if (nLen == -1)
@@ -98,7 +96,6 @@ Unicode * __fastcall Unicode::toUnicode(Unicode *pszDst, const char *pszSrc, int
 
 static __inline int UnisysEncodeUtfInline(Unicode tChar, char *pszOut)
 {
-
 	const UTFTABLE *ptEntry;
 	int nChar = tChar.wUnit;
 	int nLen = 0;
@@ -130,7 +127,6 @@ char * __fastcall Unicode::toUtf(char *pszDst, const Unicode *pszSrc, int nCount
 
 	if (pszSrc[i].wUnit)
 	{
-
 		nCount--;
 		while (1)
 		{
@@ -176,7 +172,6 @@ unsigned int __fastcall Unicode::utfnwidth(const Unicode *pszSrc, int nCount)
 
 static __inline int UnisysDecodeUtfLength(long *plChar, const char *pszSrc, int nBytes)
 {
-
 	const UTFTABLE *ptEntry;
 	int nLead;
 	int nNext;
@@ -232,7 +227,6 @@ unsigned int __fastcall Unicode::unicodenwidth(const char *pszSrc, int nBytes)
 		}
 		else
 		{
-
 			pszSrc++;
 			nBytes--;
 		}
@@ -248,7 +242,6 @@ int Unicode::utfwidth(void) const
 
 static __inline int __fastcall UnisysEncodeUtf(char *pszOut, Unicode tChar)
 {
-
 	const UTFTABLE *ptEntry;
 	int nChar = tChar.wUnit;
 	int nLen = 0;

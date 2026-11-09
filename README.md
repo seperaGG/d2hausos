@@ -8,6 +8,7 @@ here once its build matches the original; the modules so far:
 | `D2Net.dll` | 49,152 | `7876cc8dfe779102f1218a5c7352a6962c95e366ddd524e454332faf9554d0fc` |
 | `D2Lang.dll` | 110,592 | `74ae0debb325048a1ae76f8360f5a826203fa3627fc02f8a62aaa3ae0d305a4b` |
 | `D2MCPClient.dll` | 53,248 | `2dba706661c163302c3900b1a640b6136f8954d6d3fc735d6882fc1331bfc523` |
+| `D2Gdi.dll` | 57,344 | `84511be68e9f25c805ea755c1444544338d093a0348ccfa30d2dd8ce9ab907a8` |
 
 ## Requirements
 
@@ -43,7 +44,7 @@ Item pages: <https://archive.org/details/X04-62912>,
 
 | path | what |
 |---|---|
-| `D2Net/`, `D2Lang/`, `D2MCPClient/` | one directory per module: the source, export `.def` files, and `lib/*.def` for the Fog.dll/Storm.dll import libraries |
+| `D2Net/`, `D2Lang/`, `D2MCPClient/`, `D2Gdi/` | one directory per module: the source, export `.def` files, and `lib/*.def` for the import libraries of the game DLLs it calls (D2Gdi also has `lib/mklonglib.py` and `lib/smackw32.exports`, which write its old-format smackw32.lib) |
 | `include/` | headers shared by the modules |
 | `setup.sh` | makes `toolchain/` from the downloads |
 | `build.sh` | compiles and links every module |

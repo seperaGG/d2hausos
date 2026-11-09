@@ -1,0 +1,65 @@
+#ifndef D2RE_D2GDI_LINKNAMES_H
+#define D2RE_D2GDI_LINKNAMES_H
+
+#define GdiExpandToRgb GdiExpandToRgb_ibk
+#define GdiEnterAndClear GdiEnterAndClear_qjs
+#define GdiNothingSetPerspOrigin GdiNothingSetPerspOrigin_fx
+#define GdiSmackUpdate GdiSmackUpdate_qaxt
+#define GdiDrawTile GdiDrawTile_0
+#define GdiNothingPlayCutscene GdiNothingPlayCutscene_i23m
+#define GdiFillSpanSelect GdiFillSpanSelect_wr34
+#define GdiGetInterface GdiGetInterface_4h0
+#define GdiSmackClose GdiSmackClose_8iee
+#define GdiNothingSetUnreadDword GdiNothingSetUnreadDword_7fti
+#define GdiDeleteFont GdiDeleteFont_3z
+#define GdiFindNearestPaletteIndex GdiFindNearestPaletteIndex_q870
+#define GdiDestroyBackBuffer GdiDestroyBackBuffer_o5
+#define GdiHasGamma GdiHasGamma_46
+#define GdiSmackOpen GdiSmackOpen_ens
+#define GdiSpriteDrawWallShaded GdiSpriteDrawWallShaded_d2m
+#define GdiSetSuspended GdiSetSuspended_udlv
+#define GdiNothingResetPerspDepth GdiNothingResetPerspDepth_buds
+#define GdiSpriteDrawUnitBlocks GdiSpriteDrawUnitBlocks_md
+#define GdiOpenCutscene GdiOpenCutscene_tnn
+#define GdiDrawCelSkip GdiDrawCelSkip_nyyd
+#define GdiDrawCel GdiDrawCel_f1h
+#define GdiIsCutscene GdiIsCutscene_bpu9
+#define GdiReinit GdiReinit_9dn9
+#define GdiSetEnvInfo GdiSetEnvInfo_a
+#define GdiGetFrameOpenQuery GdiGetFrameOpenQuery_dnw2
+#define GdiNothingSetVertexColor GdiNothingSetVertexColor_m91
+#define GdiSmackNoop GdiSmackNoop_hqw
+#define GdiSetPaletteEntries GdiSetPaletteEntries_yjin
+#define GdiGetDrawCtxFlag GdiGetDrawCtxFlag_ik
+#define GdiFillSquare GdiFillSquare_x
+#define GdiNothingSetGamma GdiNothingSetGamma_2
+#define GdiSpriteDrawRows GdiSpriteDrawRows_l8f
+#define GdiTeardown GdiTeardown_e
+#define GdiSpriteWarp GdiSpriteWarp_cg
+#define GdiNothingFlushCaches GdiNothingFlushCaches_lpq
+#define GdiGetEnvValue GdiGetEnvValue_uv
+#define GdiPresent GdiPresent_j4
+#define GdiAlwaysTrue GdiAlwaysTrue_4ze
+#define GdiSpriteStub GdiSpriteStub_780
+#define GdiDrawCelPreMap GdiDrawCelPreMap_13b2
+#define GdiNothingPerspProjectDepth GdiNothingPerspProjectDepth_75u
+#define GdiSetup GdiSetup_8kx
+#define GdiNothingDebugLightGrid GdiNothingDebugLightGrid_d3s
+#define GdiDrawLine GdiDrawLine_88s
+#define GdiSmackInit GdiSmackInit_i7a
+#define GdiCreateFont GdiCreateFont_l
+#define GdiDrawDiamond GdiDrawDiamond_fid1
+#define GdiNothingPerspProject GdiNothingPerspProject_46b
+#define GdiGetBitmapHandle GdiGetBitmapHandle_d8i
+#define GdiInit GdiInit_5tt0
+#define GdiFillSpan GdiFillSpan_uglt
+#define GdiClearBackBuffer GdiClearBackBuffer_m6sf
+#define GdiDrawFrame GdiDrawFrame_a
+#define GdiAlwaysFalse GdiAlwaysFalse_f0
+#define GdiSpriteDrawShadow GdiSpriteDrawShadow_e0e0
+#define GdiGetScreenSize GdiGetScreenSize_r7
+#define GdiDrawDebugText GdiDrawDebugText_7r8w
+#define GdiFillRect GdiFillRect_x9jt
+#define GdiLeavePause GdiLeavePause_8hvt3
+
+#endif

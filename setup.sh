@@ -76,11 +76,13 @@ done
 sed -i -E -e 's/^extern (int PASCAL FAR __WSAFDIsSet)/\1/' \
 	-e '/__WSAFDIsSet/!s/^([A-Za-z_][A-Za-z_ *]* PASCAL FAR [A-Za-z_]+ *\()/__declspec(dllimport) \1/' \
 	"$TC/sdkinclude/winsock.h"
-# The three system import libraries the DLLs link with, and Microsoft's msvcrt.dll for the linker.
+# The system import libraries the DLLs link with, and Microsoft's msvcrt.dll for the linker.
 mkdir -p "$TC/sdklib"
 cp "$W"/sdk/Kernel32_Lib.* "$TC/sdklib/kernel32.lib"
 cp "$W"/sdk/AdvAPI32_Lib.* "$TC/sdklib/advapi32.lib"
 cp "$W"/sdk/WSock32_Lib.* "$TC/sdklib/wsock32.lib"
+cp "$W"/sdk/User32_Lib.* "$TC/sdklib/user32.lib"
+cp "$W"/sdk/Gdi32_Lib.* "$TC/sdklib/gdi32.lib"
 cp "$TC"/bin/LINK.EXE "$TC"/bin/MSPDB60.DLL "$TC/linkbin/"
 cp "$W"/sdk/Msvcrt_Dll.* "$TC/linkbin/msvcrt.dll"
 echo "$MSVCRT_SHA  $TC/linkbin/msvcrt.dll" | sha256sum -c --quiet

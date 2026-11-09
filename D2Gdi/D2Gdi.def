@@ -1,0 +1,3 @@
+LIBRARY D2Gdi
+EXPORTS
+    GdiGetInterface_4h0 @10000 NONAME

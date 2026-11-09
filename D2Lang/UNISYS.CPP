@@ -25,9 +25,7 @@ typedef struct SYSMAPPAIR SYSMAPPAIR, *PTSYSMAPPAIR;
 struct SYSMAPPAIR
 {
  	WORD		wSysCode;
-
  	WORD		wUnit;
-
 };
 
 static WORD sgwSysMapCount;
@@ -64,7 +62,6 @@ int __fastcall Unicode::loadSysMap(HD2ARCHIVE hArchive, const char *pszFileName)
 	BYTE *pbNumRanges;
 	SYSMAPPAIR *ptPair;
 	char szName[40];
-
 	int nLen;
 	BOOL fFound;
 	int i;
@@ -77,7 +74,6 @@ int __fastcall Unicode::loadSysMap(HD2ARCHIVE hArchive, const char *pszFileName)
 		D2FREE2(pbFile);
 		return 0;
 	}
-
 	pbCur = pbFile + 6;
 	nLen = 0;
 	fFound = FALSE;
@@ -126,7 +122,6 @@ int __fastcall Unicode::loadSysMap(HD2ARCHIVE hArchive, const char *pszFileName)
 	}
 	for (i = 0; i < *pwCount; i++)
 	{
-
 		ptPair = &sgptSysMapPairs[i];
 		ptPair->wSysCode = pbCur[0];
 		ptPair->wUnit = pbCur[2];
@@ -172,7 +167,6 @@ Unicode * __fastcall Unicode::sys2Unicode(Unicode *pszDst, const char *pszSrc, i
 	{
 		if (!*pszSrc)
 			break;
-
 		if ((BYTE)*pszSrc >= 32)
 		{
 			for (j = 0; j < sgbNumLeadRanges; j++)
@@ -193,7 +187,6 @@ Single:
 			nUnit = wCode;
 		else
 		{
-
 			nLo = 0;
 			nHi = sgwSysMapCount - 1;
 			if (wCode < sgptSysMapPairs[sgpwSysMapIndex[0]].wSysCode ||
@@ -228,7 +221,6 @@ Single:
 		else
 			pszDst[nUnits].wUnit = (WORD)nUnit;
 	}
-
 	if (!*pszSrc && nUnits < nCount)
 		pszDst[nUnits].wUnit = 0;
 	return pszDst;
@@ -271,7 +263,6 @@ char * __fastcall Unicode::unicode2Sys(char *pszDst, const Unicode *pszSrc, int 
 					goto Single;
 			}
 		}
-
 		pszDst[nBytes++] = (char)((WORD)nCode >> 8);
 		pszDst[nBytes++] = (char)nCode;
 		continue;
@@ -321,7 +312,6 @@ unsigned long __fastcall Unicode::sysWidth(const Unicode *pszStr, int nCount)
 		{
 			if ((BYTE)nCode < 32)
 				goto OneByte;
-
 			j = 0;
 			if (j < sgbNumLeadRanges)
 			{

@@ -114,7 +114,6 @@ extern "C" DWORD __fastcall FogOrdinal10070(DWORD, DWORD);
 extern "C" DWORD __fastcall FogOrdinal10072(DWORD, DWORD);
 extern "C" DWORD __fastcall FogOrdinal10140(DWORD, DWORD, DWORD, DWORD, DWORD);
 extern "C" DWORD __fastcall FogOrdinal10141(DWORD, DWORD, DWORD, DWORD, DWORD);
-
 extern "C" __declspec(dllimport) DWORD gdwBitMasks[];
 #define FogDataArraysSprintf FogOrdinal10016
 #define FogErrorManagerGetSysInfo() ((void *)FogOrdinal10020())

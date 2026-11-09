@@ -20,69 +20,54 @@ struct __declspec(dllexport) Unicode
 	{
 		return wUnit;
 	}
-
 	int isWhitespace(void) const
 	{
-
 		if (wUnit < 256)
 			return isspace(wUnit);
 		return 0;
 	}
-
 	int isNewline(void) const
 	{
 		return wUnit == 10;
 	}
-
 	int isPipe(void) const
 	{
-
 		if (wUnit < 256)
 			return wUnit == 255;
 		return 0;
 	}
-
 	int isASCII(void) const
 	{
 		return wUnit < 128;
 	}
-
 	int isAlpha(void) const
 	{
-
 		if (wUnit < 128 && isalpha((char)wUnit))
 			return 1;
 		return 0;
 	}
-
 	Unicode toUpper(void) const
 	{
 		return Unicode(UNICODE_TOUPPER(wUnit));
 	}
-
 	Unicode toLower(void) const
 	{
 		return Unicode(wUnit < 256 ? _toLowerTable[wUnit] : wUnit);
 	}
-
 	int compare(Unicode tOther) const
 	{
 		return UNICODE_TOUPPER(wUnit) == UNICODE_TOUPPER(tOther.wUnit);
 	}
-
 	static int __fastcall compare(Unicode tFirst, Unicode tSecond)
 	{
 		return UNICODE_TOUPPER(tFirst.wUnit) == UNICODE_TOUPPER(tSecond.wUnit);
 	}
-
 	static int __fastcall isWordEnd(const Unicode *pszStr, unsigned int nIndex)
 	{
-
 		if (nIndex && isalnum(pszStr[nIndex]) && !isalnum(pszStr[nIndex + 1]))
 			return 1;
 		return 0;
 	}
-
 	static int __fastcall strcoll(const Unicode *pszStr1, const Unicode *pszStr2)
 	{
 		return strncoll(pszStr1, pszStr2, 2147483647);
