@@ -1,0 +1,3 @@
+LIBRARY D2MultiLAN
+EXPORTS
+    QueryInterface @1

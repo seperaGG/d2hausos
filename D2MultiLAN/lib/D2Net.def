@@ -1,0 +1,7 @@
+LIBRARY D2Net
+EXPORTS
+    D2NetClientInit@8 @10000 NONAME
+    D2NetClientClose@0 @10001 NONAME
+    D2NetGetRemoteConnection@0 @10017 NONAME
+    D2NetSendToServer@12 @10005 NONAME
+    D2NetGetCltSysMsg@8 @10008 NONAME

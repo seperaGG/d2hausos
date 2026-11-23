@@ -1,0 +1,115 @@
+#include <windows.h>
+#ifndef IDC_STATIC
+#define IDC_STATIC (-1)
+#endif
+
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,1,0,0
+ PRODUCTVERSION 0,1,0,0
+ FILEFLAGSMASK 63L
+ FILEFLAGS 0L
+ FILEOS 4L
+ FILETYPE 1L
+ FILESUBTYPE 0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "000004e4"
+        BEGIN
+            VALUE "Comments", "Developed by Blizzard North\0"
+            VALUE "CompanyName", "Blizzard Entertainment\0"
+            VALUE "FileDescription", "Diablo II Server\0"
+            VALUE "FileVersion", "0.01\0"
+            VALUE "InternalName", "D2SERVE\0"
+            VALUE "LegalCopyright", "Copyright \251 1997-1998\0"
+            VALUE "LegalTrademarks", "Diablo II is a trademark and Blizzard Entertainment is a registered trademark of Davidson and Associates, Inc.\0"
+            VALUE "OriginalFilename", "D2.exe\0"
+            VALUE "ProductName", "Diablo II\0"
+            VALUE "ProductVersion", "0.01\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0, 1252
+    END
+END
+
+102 DIALOG DISCARDABLE  10, 10, 521, 391
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Diablo 2 Server (v0.22)"
+MENU 101
+FONT 8, "MS Sans Serif"
+BEGIN
+    LISTBOX         1000,5,15,93,230,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LISTBOX         1001,105,15,93,230,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LISTBOX         1002,205,15,93,230,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        1015,429,260,28,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    EDITTEXT        1014,429,275,28,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    EDITTEXT        1016,459,290,28,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    EDITTEXT        1005,394,345,45,15,ES_READONLY
+    CONTROL         "Progress1",1004,"msctls_progress32",WS_BORDER,444,345,70,15
+    PUSHBUTTON      "Quit",IDCANCEL,464,365,50,14
+    LTEXT           "Active Games",IDC_STATIC,10,5,49,10
+    LTEXT           "Game Info",IDC_STATIC,110,5,48,10
+    LTEXT           "Unit/Item List",IDC_STATIC,210,5,48,10
+    LTEXT           "Players:",IDC_STATIC,399,275,26,8
+    LTEXT           "Active Monsters:",IDC_STATIC,399,290,54,8
+    LTEXT           "Games:",IDC_STATIC,399,260,25,8
+    LISTBOX         1018,305,15,212,230,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Detail",IDC_STATIC,310,5,19,8
+    LISTBOX         1019,5,260,380,100,LBS_SORT | LBS_NOINTEGRALHEIGHT | LBS_NOSEL | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    EDITTEXT        1021,40,364,345,14,ES_AUTOHSCROLL | ES_WANTRETURN
+    LTEXT           "Console:",IDC_STATIC,5,369,28,8
+    LTEXT           "Log",IDC_STATIC,10,249,13,8
+    PUSHBUTTON      "Display",1010,401,365,50,14
+    LTEXT           "Time Up:",IDC_STATIC,400,316,30,8
+    EDITTEXT        1017,437,316,28,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+END
+
+103 DIALOG DISCARDABLE  340, 100, 168, 135
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Performance"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "",1010,"Static",SS_BLACKFRAME,7,7,154,101
+    EDITTEXT        1008,36,117,22,14,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    EDITTEXT        1009,101,117,60,14,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    LTEXT           "Players:",IDC_STATIC,7,117,26,8
+    LTEXT           "Monsters:",IDC_STATIC,66,117,32,8
+END
+
+104 DIALOG DISCARDABLE  0, 270, 321, 117
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Console"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        1007,7,96,250,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Execute",IDOK,264,96,50,14
+    LISTBOX         1006,7,7,307,78,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+END
+
+101 MENU DISCARDABLE
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "Performance &Logging",        1017
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       1013
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Console...",                 1012
+        MENUITEM "&Performance...",             1011
+    END
+END
+
+100 ACCELERATORS DISCARDABLE
+BEGIN
+    "X",            40003,                  VIRTKEY, ALT, NOINVERT
+    VK_RETURN,      40001,                  VIRTKEY, ALT, NOINVERT
+    "D",            40002,                  VIRTKEY, ALT, NOINVERT
+END
+
+IDI_APP ICON DISCARDABLE "D2ServerApp.ico"

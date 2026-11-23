@@ -48,10 +48,11 @@ with open(sys.argv[1], "rb") as i, open(sys.argv[2], "wb") as o:
         o.write(s[16:2064])' "$W"/*.mdf "$W/vs6.iso"
 rm -f "$W"/*.mdf
 7z x -y -bd -o"$W/vs6" "$W/vs6.iso" VC98/BIN/CL.EXE VC98/BIN/C1.DLL VC98/BIN/C1XX.DLL VC98/BIN/C2.DLL VC98/BIN/LIB.EXE \
-	VC98/BIN/LINK.EXE COMMON/MSDEV98/BIN/MSPDB60.DLL 'VC98/INCLUDE/*' 'VC98/LIB/*' >/dev/null
+	VC98/BIN/LINK.EXE VC98/BIN/CVTRES.EXE COMMON/MSDEV98/BIN/MSPDB60.DLL COMMON/MSDEV98/BIN/RC.EXE \
+	COMMON/MSDEV98/BIN/RCDLL.DLL 'VC98/INCLUDE/*' 'VC98/LIB/*' >/dev/null
 rm -f "$W/vs6.iso"
 mkdir -p "$TC/bin" "$TC/linkbin"
-cp "$W"/vs6/VC98/BIN/* "$W/vs6/COMMON/MSDEV98/BIN/MSPDB60.DLL" "$TC/bin/"
+cp "$W"/vs6/VC98/BIN/* "$W"/vs6/COMMON/MSDEV98/BIN/* "$TC/bin/"
 mv "$W/vs6/VC98/INCLUDE" "$TC/include"
 mv "$W/vs6/VC98/LIB" "$TC/lib"
 
@@ -88,7 +89,7 @@ cp "$W"/sdk/ddraw_Lib.* "$TC/sdklib/ddraw.lib"
 cp "$W"/sdk/dsound_Lib.* "$TC/sdklib/dsound.lib"
 cp "$W"/sdk/dxguid_Lib.* "$TC/sdklib/dxguid.lib"
 cp "$W"/sdk/WinMM_Lib.* "$TC/sdklib/winmm.lib"
-cp "$TC"/bin/LINK.EXE "$TC"/bin/MSPDB60.DLL "$TC/linkbin/"
+cp "$TC"/bin/LINK.EXE "$TC"/bin/CVTRES.EXE "$TC"/bin/MSPDB60.DLL "$TC/linkbin/"
 cp "$W"/sdk/Msvcrt_Dll.* "$TC/linkbin/msvcrt.dll"
 echo "$MSVCRT_SHA  $TC/linkbin/msvcrt.dll" | sha256sum -c --quiet
 rm -rf "$W"

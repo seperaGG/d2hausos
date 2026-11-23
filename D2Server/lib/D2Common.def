@@ -1,0 +1,7 @@
+LIBRARY D2Common
+EXPORTS
+    @D2CommonOrdinal10984@0 @10984 NONAME
+    @D2CommonOrdinal10980@4 @10980 NONAME
+    @D2CommonOrdinal10983@0 @10983 NONAME
+    D2CommonOrdinal10553@0 @10553 NONAME
+    D2CommonOrdinal10554@12 @10554 NONAME

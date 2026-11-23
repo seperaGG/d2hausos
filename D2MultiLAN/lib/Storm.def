@@ -1,0 +1,4 @@
+LIBRARY Storm
+EXPORTS
+    SMemFree@16 @403 NONAME
+    SMemAlloc@16 @401 NONAME

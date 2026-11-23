@@ -1,0 +1,5 @@
+LIBRARY D2Server
+EXPORTS
+    QueryInterface=?QueryInterface_nn3@@YAPAPAXXZ @10003
+    ?ToMCPCreateGameReply_95@@YGHHHH@Z @10001 NONAME
+    ?ServerNothingExport_94@@YIXXZ @10002 NONAME

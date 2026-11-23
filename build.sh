@@ -1,9 +1,10 @@
 #!/bin/sh
 # Build the Diablo II 1.00 modules byte-identical to the originals into out/, and check each sha256.
 set -e
+case "$D2SERVER_DLL" in ''|/*) ;; *) D2SERVER_DLL=$(pwd)/$D2SERVER_DLL ;; esac
 cd "$(dirname "$0")"
 T="sh $(pwd)/tools/msvc.sh"
-mkdir -p out/D2Net out/D2Lang out/D2MCPClient out/D2Gdi out/D2DDraw out/D2sound out/D2Launch out/D2Multi out/D2Glide out/D2Direct3D out/D2Game
+mkdir -p out/D2Net out/D2Lang out/D2MCPClient out/D2Gdi out/D2DDraw out/D2sound out/D2Launch out/D2Multi out/D2Glide out/D2Direct3D out/D2Game out/D2Common out/D2MultiLAN out/D2Server
 
 # D2Net.dll
 cd D2Net
@@ -220,6 +221,109 @@ LINK_TIME="2000-05-26 19:01:13" $T link /nologo /DLL /INCREMENTAL:NO /OPT:REF,IC
 cp $O/D2Game.dll ../out/D2Game.dll
 cd ..
 
+# D2Common.dll
+cd D2Common
+O=../out/D2Common
+$T cl /nologo /c /O2 /Ob2 /Gr /Oy /Gy /Gf /MT /W3 /I. /I../include /Fo$O/ \
+	COLLISN/Collisn.cpp COMPOSIT/Composit.cpp DATATBLS/AnimTbls.cpp DATATBLS/Arena.cpp DATATBLS/BeltTbls.cpp \
+	DATATBLS/DataTbls.cpp DATATBLS/FieldTbls.cpp DATATBLS/InvTbls.cpp DATATBLS/ItemTbls.cpp DATATBLS/LvlTbls.cpp \
+	DATATBLS/MissileTbls.cpp DATATBLS/MonsterTbls.cpp DATATBLS/ObjTbls.cpp DATATBLS/OverlayTbls.cpp \
+	DATATBLS/Sequence.cpp DATATBLS/TokTbls.cpp DATATBLS/TransformTbls.cpp DRLG/DrlgRing.cpp DRLG/Drlg.cpp \
+	DRLG/DrlgAnim.cpp DRLG/DrlgGrid.cpp DRLG/DrlgLogic.cpp DRLG/DrlgRoom.cpp DRLG/DrlgVer.cpp DRLG/DrlgWarp.cpp \
+	DRLG/Maze.cpp DRLG/OutDesr.cpp DRLG/Outdoors.cpp DRLG/OutRoads.cpp DRLG/OutMesa.cpp DRLG/OutJung.cpp \
+	DRLG/OutEntry.cpp DRLG/OutPlace.cpp DRLG/OutRoom.cpp DRLG/OutWild.cpp DRLG/Preset.cpp DRLG/RoomTile.cpp \
+	DRLG/TileSub.cpp DUNGEON/Dungeon.cpp ENVIRONMENT/Env.cpp EXCEL/Excel.cpp INVENTORY/Inventory.cpp \
+	INVENTORY/InvList.cpp ITEMS/ItemMods.cpp ITEMS/Items.cpp LOGGING/Logging.cpp LOGGING/ProfCore.cpp \
+	MONSTERS/MonsterKillsLog.cpp MONSTERS/MonsterRand.cpp MONSTERS/MonsterRegion.cpp MONSTERS/MONSTERS.cpp \
+	PATH/AStar.cpp PATH/IDAstar.cpp PATH/Path.cpp PATH/PathMisc.cpp PATH/PathUtil.cpp PATH/PathWF.cpp \
+	PATH/Step.cpp QUESTRECORD/QuestRecord.cpp RANDOM/Random.cpp SKILLS/Skills.cpp STATS/States.cpp \
+	STATS/Stats.cpp UNITS/Missile.cpp UNITS/UnitFinds.cpp UNITS/UnitRoom.cpp UNITS/Units.cpp UNITS/UnitUtil.cpp \
+	TEXT/Text.cpp CHAT/Chat.cpp WAYPOINT/Waypoint.cpp GUILDS/Guilds.cpp SAVELOAD/saveload.cpp STANDIN/Empty01.cpp \
+	STANDIN/Empty02.cpp STANDIN/Empty03.cpp STANDIN/Empty04.cpp STANDIN/Empty05.cpp STANDIN/Empty06.cpp \
+	STANDIN/Empty07.cpp STANDIN/Empty08.cpp
+OBJ="$O/Collisn.obj $O/Composit.obj $O/AnimTbls.obj $O/Arena.obj $O/BeltTbls.obj $O/DataTbls.obj
+	$O/FieldTbls.obj $O/InvTbls.obj $O/ItemTbls.obj $O/LvlTbls.obj $O/MissileTbls.obj $O/MonsterTbls.obj
+	$O/ObjTbls.obj $O/OverlayTbls.obj $O/Sequence.obj $O/TokTbls.obj $O/TransformTbls.obj $O/DrlgRing.obj
+	$O/Drlg.obj $O/DrlgAnim.obj $O/DrlgGrid.obj $O/DrlgLogic.obj $O/DrlgRoom.obj $O/DrlgVer.obj
+	$O/DrlgWarp.obj $O/Maze.obj $O/OutDesr.obj $O/Outdoors.obj $O/OutRoads.obj $O/OutMesa.obj
+	$O/OutJung.obj $O/OutEntry.obj $O/OutPlace.obj $O/OutRoom.obj $O/OutWild.obj $O/Preset.obj
+	$O/RoomTile.obj $O/TileSub.obj $O/Dungeon.obj $O/Env.obj $O/Excel.obj $O/Inventory.obj $O/InvList.obj
+	$O/ItemMods.obj $O/Items.obj $O/Logging.obj $O/ProfCore.obj $O/MonsterKillsLog.obj $O/MonsterRand.obj
+	$O/MonsterRegion.obj $O/MONSTERS.obj $O/AStar.obj $O/IDAstar.obj $O/Path.obj $O/PathMisc.obj
+	$O/PathUtil.obj $O/PathWF.obj $O/Step.obj $O/QuestRecord.obj $O/Random.obj $O/Skills.obj $O/States.obj
+	$O/Stats.obj $O/Missile.obj $O/UnitFinds.obj $O/UnitRoom.obj $O/Units.obj $O/UnitUtil.obj $O/Text.obj
+	$O/Chat.obj $O/Waypoint.obj $O/Guilds.obj $O/saveload.obj $O/Empty01.obj $O/Empty02.obj $O/Empty03.obj
+	$O/Empty04.obj $O/Empty05.obj $O/Empty06.obj $O/Empty07.obj $O/Empty08.obj"
+$T cl /nologo /c /O1 /Ob2 /Gr /Oy /Gy /Gf /MT /W3 /Ihell /I. /I../include /Fo$O/ hell/HellArchive.cpp \
+	hell/HellString.cpp
+rm -f $O/D2Hell.lib
+$T lib /nologo /out:$O/D2Hell.lib $O/HellArchive.obj $O/HellString.obj >/dev/null
+for m in Storm D2CMP D2Lang Fog; do $T lib /nologo /def:lib/$m.def /machine:ix86 /out:$O/$m.lib >/dev/null; done
+rm -rf $O/ren
+python3 lib/renobj.py lib/selfnames.txt $O/ren $OBJ
+REN=$(for o in $OBJ; do printf '%s/ren/%s ' $O ${o#$O/}; done)
+for try in 1 2 3; do
+	rm -f $O/D2Common.ilk $O/D2Common.dll ../out/D2Common.dll
+	LINK_TIME="@2000-05-26 18:58:00 i0.00459" $T link /nologo /DLL /INCREMENTAL:YES /BASE:0x10000000 /MACHINE:IX86 \
+		/DEF:D2Common.def /OUT:$O/D2Common.dll $REN \
+		$O/Storm.lib $O/D2Hell.lib $O/D2CMP.lib $O/D2Lang.lib $O/Fog.lib kernel32.lib user32.lib
+	[ "$(sha256sum $O/D2Common.dll | cut -d' ' -f1)" = 6e8b73325ec6b885213ecc9a98017ec5cf6d6984ff4a2735c73a3f3595e0544c ] && break
+done
+cp $O/D2Common.dll ../out/D2Common.dll
+cd ..
+
+# D2MultiLAN.dll
+cd D2MultiLAN
+O=../out/D2MultiLAN
+for t in D2MultiLAN1 D2MultiLAN2 D2MultiLAN3; do
+	$T cl /nologo /c /O2 /Ob2 /Gr /Oy /Gy /Gf /MT /W3 /Z7 /I. /I../include /Fo$O/ ../D2MultiLAN/../D2MultiLAN/$t.cpp
+done
+python3 lib/coffpad.py $O/D2MultiLAN1.obj -L '?sExit@@YGHPAU_PARAMS@@@Z:0x307e4'
+python3 lib/coffpad.py $O/D2MultiLAN3.obj -s '?sCreateGameNameCallback@@YGHPAXHPAD@Z:48' \
+	-f '?sJoinGameNameCallback@@YGHPAXHPAD@Z' -f '?sCreateGameNameCallback@@YGHPAXHPAD@Z' \
+	-f '?sCreateGameNamePostCallback@@YGHPAU_PARAMS@@@Z' \
+	-L '?sJoinGameNameCallback@@YGHPAXHPAD@Z:0x34359' -l '?sJoinGameNamePostCallback@@YGHPAU_PARAMS@@@Z:0x344a2' \
+	-l '?sCreateGameNameCallback@@YGHPAXHPAD@Z:0x35b34' -l '?sCreateGameNamePostCallback@@YGHPAU_PARAMS@@@Z:0x35d22' \
+	-l '?sPasswordCallback@@YGHPAXHPAD@Z:0x35ded'
+for m in Storm D2Win D2Net D2Lang; do $T lib /nologo /def:lib/$m.def /machine:ix86 /out:$O/$m.lib >/dev/null; done
+W=../toolchain/wineprefix/drive_c/D2/Release
+rm -rf "$W"; mkdir -p "$W/Obj/D2MultiLAN"
+cp $O/D2MultiLAN1.obj $O/D2MultiLAN2.obj $O/D2MultiLAN3.obj D2MultiLAN.def $O/Storm.lib $O/D2Win.lib $O/D2Net.lib \
+	$O/D2Lang.lib "$W/Obj/D2MultiLAN/"
+rm -f ../out/D2MultiLAN.dll
+(cd "$W/Obj/D2MultiLAN" && LINK_TIME="2000-05-18 22:50:12" $T link /nologo /DLL /INCREMENTAL:NO /BASE:0x10000000 \
+	/MACHINE:IX86 /DEF:D2MultiLAN.def /DEBUG /DEBUGTYPE:BOTH /PDB:C:\\D2\\Release\\Obj\\D2MultiLAN\\D2MultiLAN.pdb \
+	/OUT:\\D2\\Release\\D2MultiLAN.dll D2MultiLAN1.obj D2MultiLAN2.obj D2MultiLAN3.obj Storm.lib D2Win.lib D2Net.lib \
+	D2Lang.lib kernel32.lib)
+cp "$W/D2MultiLAN.dll" ../out/D2MultiLAN.dll
+python3 -c 'import sys; f = open(sys.argv[1], "r+b"); f.seek(0x1d005); f.write(b"\\D2")' ../out/D2MultiLAN.dll
+cd ..
+# D2Server.dll (its icon is read from an original D2Server.dll: D2SERVER_DLL=<file> sh build.sh)
+if [ -n "$D2SERVER_DLL" ]; then
+cd D2Server
+O=../out/D2Server
+C="$T cl /nologo /c /O2 /Ob2 /Gr /Oy /Gy /Gf /MT /W3 /I. /I../include /Fo$O/"
+$C Archives.cpp Bnet.cpp CharServ.cpp Console.cpp Display.cpp FromMCP.cpp Inifile.cpp Perf.cpp PlayerToken.cpp \
+	ToMCP.cpp Empty.cpp
+$C /GX WinMain.cpp
+$T cl /nologo /c /O1 /Ob2 /Gr /Oy /Gy /Gf /MT /W3 /Ihell /I. /I../include /Fo$O/HellArchive.obj hell/HellArchive.cpp
+rm -f $O/D2Hell.lib
+$T lib /nologo /out:$O/D2Hell.lib $O/HellArchive.obj >/dev/null
+for m in Storm D2Net D2Common D2Game D2Lang Fog; do
+	$T lib /nologo /def:lib/$m.def /machine:ix86 /out:$O/$m.lib >/dev/null
+done
+python3 lib/mkico.py "$D2SERVER_DLL" $O
+$T rc /i $O /fo $O/D2Server.res D2Server.rc >/dev/null
+rm -f $O/D2Server.ilk ../out/D2Server.dll
+LINK_TIME="2000-05-26 19:15:40" $T link /nologo /DLL /INCREMENTAL:YES /BASE:0x10000000 /MACHINE:IX86 \
+	/DEF:D2Server.def /OUT:$O/D2Server.dll $O/Archives.obj $O/Bnet.obj $O/CharServ.obj $O/Console.obj \
+	$O/Display.obj $O/FromMCP.obj $O/Inifile.obj $O/Perf.obj $O/PlayerToken.obj $O/ToMCP.obj $O/WinMain.obj \
+	$O/Empty.obj $O/Storm.lib $O/D2Hell.lib $O/D2Net.lib $O/D2Common.lib $O/D2Game.lib $O/D2Lang.lib \
+	$O/Fog.lib kernel32.lib user32.lib gdi32.lib wsock32.lib $O/D2Server.res
+cp $O/D2Server.dll ../out/D2Server.dll
+cd ..
+fi
+
 sha256sum -c <<EOF
 7876cc8dfe779102f1218a5c7352a6962c95e366ddd524e454332faf9554d0fc  out/D2Net.dll
 74ae0debb325048a1ae76f8360f5a826203fa3627fc02f8a62aaa3ae0d305a4b  out/D2Lang.dll
@@ -232,4 +336,8 @@ d403adb406b93c76c8c0d1bea131b648754fca3a8337120314bfe3e0f6e3b06c  out/D2sound.dl
 34bcf5a35fd5197dd859ab0d704460ae007d16095f7693f48d47a7db88cda381  out/D2Glide.dll
 1a070bb5c8ee4d159a333a1abd0cad5608ede2fa12cdd70e14e3e1b1e96291b1  out/D2Direct3D.dll
 695024b9f2c9f0e9446a1b224d823d4a8d5f9424b6cc314953f01a5a34eaebc4  out/D2Game.dll
+6e8b73325ec6b885213ecc9a98017ec5cf6d6984ff4a2735c73a3f3595e0544c  out/D2Common.dll
+45b2a54d4108cba651a0de5fa165cf99e10be110352bff566b4c30d0cf3aa2d6  out/D2MultiLAN.dll
 EOF
+[ -n "$D2SERVER_DLL" ] || { echo "out/D2Server.dll: not built (set D2SERVER_DLL)"; exit 0; }
+echo "ccaaeb7800376991482e74f4e0e2c01f16088a197d45d38f39eb16ee50c2513b  out/D2Server.dll" | sha256sum -c

@@ -17,6 +17,9 @@ here once its build matches the original; the modules so far:
 | `D2Glide.dll` | 139,264 | `34bcf5a35fd5197dd859ab0d704460ae007d16095f7693f48d47a7db88cda381` |
 | `D2Direct3D.dll` | 172,032 | `1a070bb5c8ee4d159a333a1abd0cad5608ede2fa12cdd70e14e3e1b1e96291b1` |
 | `D2Game.dll` | 802,816 | `695024b9f2c9f0e9446a1b224d823d4a8d5f9424b6cc314953f01a5a34eaebc4` |
+| `D2Common.dll` | 724,992 | `6e8b73325ec6b885213ecc9a98017ec5cf6d6984ff4a2735c73a3f3595e0544c` |
+| `D2MultiLAN.dll` | 119,112 | `45b2a54d4108cba651a0de5fa165cf99e10be110352bff566b4c30d0cf3aa2d6` |
+| `D2Server.dll` | 184,320 | `ccaaeb7800376991482e74f4e0e2c01f16088a197d45d38f39eb16ee50c2513b` |
 
 ## Requirements
 
@@ -33,6 +36,10 @@ sh build.sh     # builds every module into out/ and checks each sha256
 ```
 
 `build.sh` ends with one `OK` line per module (`out/D2Net.dll: OK`, ...). Use a path without spaces.
+
+`D2Server.dll` holds one icon, which is not part of this repository. To build it, name a `D2Server.dll` of
+Diablo II 1.00 to take the icon from: `D2SERVER_DLL=/path/to/D2Server.dll sh build.sh`. Without it the other
+modules are built and D2Server is skipped.
 
 ## Downloads
 
@@ -52,12 +59,12 @@ Item pages: <https://archive.org/details/X04-62912>,
 
 | path | what |
 |---|---|
-| `D2Net/`, `D2Lang/`, `D2MCPClient/`, `D2Gdi/`, `D2DDraw/`, `D2sound/`, `D2Launch/`, `D2Multi/`, `D2Glide/`, `D2Direct3D/`, `D2Game/` | one directory per module: the source, export `.def` files, and `lib/*.def` for the import libraries of the game DLLs it calls (D2Gdi, D2DDraw, D2Glide and D2Direct3D also have `lib/mklonglib.py` and `lib/*.exports`, which write their old-format smackw32.lib, binkw32.lib and glide3x.lib; D2Launch has `lib/D2WinSyms.c`, the symbols its D2Win.lib is built from) |
+| `D2Net/`, `D2Lang/`, `D2MCPClient/`, `D2Gdi/`, `D2DDraw/`, `D2sound/`, `D2Launch/`, `D2Multi/`, `D2Glide/`, `D2Direct3D/`, `D2Game/`, `D2Common/`, `D2MultiLAN/`, `D2Server/` | one directory per module: the source, export `.def` files, and `lib/*.def` for the import libraries of the game DLLs it calls (D2Gdi, D2DDraw, D2Glide and D2Direct3D also have `lib/mklonglib.py` and `lib/*.exports`, which write their old-format smackw32.lib, binkw32.lib and glide3x.lib; D2Launch has `lib/D2WinSyms.c`, the symbols its D2Win.lib is built from; D2Common and D2Server have `hell/`, the D2Hell static library's files; D2Common has `lib/renobj.py` and `lib/selfnames.txt`, which rename symbols in copies of its objects before the link; D2MultiLAN has `lib/coffpad.py`, which pads the debug data of its objects before the link; D2Server has `D2Server.rc`, its resources, and `lib/mkico.py`, which reads the icon) |
 | `include/` | headers shared by the modules |
 | `setup.sh` | makes `toolchain/` from the downloads |
 | `build.sh` | compiles and links every module |
 | `LICENSE` | MIT License |
-| `tools/msvc.sh` | runs `cl`/`lib` under wibo and `link` under Wine, with the linker on a fixed clock so it writes the original timestamps |
+| `tools/msvc.sh` | runs `cl`/`lib` under wibo and `link`/`rc` under Wine, with the linker on a fixed clock so it writes the original timestamps |
 | `tools/sdk-include.py` | rebuilds the SDK's header directory from its cabinet files |
 
 `toolchain/`, `downloads/` and `out/` are created by the scripts and are not part of the repository.
