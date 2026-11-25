@@ -1,5 +1,5 @@
 #!/bin/sh
-# One-time setup: download the three files listed in README.md (or use copies already in downloads/) and unpack
+# One-time setup: download the four files listed in README.md (or use copies already in downloads/) and unpack
 # the toolchain into toolchain/. Needs: curl, 7z, cabextract, python3, wine (with 32-bit support).
 set -e
 cd "$(dirname "$0")"
@@ -14,6 +14,10 @@ VS6_SHA=7bb1ce5bdd40d3e899371b62b8828d7a400f292346e73d5ecd1c5e9da355a348
 SDK=x05-74598_0600_Platform_SDK_April2000_Edition.iso.7z
 SDK_URL=https://archive.org/download/$SDK/$SDK
 SDK_SHA=d997b70fac386e46cfde7f509747869f5887cb87b88d09fb3495ee7096b6778f
+SDK99=1_PLATSDK.iso
+SDK99_URL=https://archive.org/download/msdn-disc6-october-1999-x05-05207/$SDK99
+SDK99_SHA=6ebf3a588079468faded09f1877296887e1d18d26a4298caabfb26a0fce1221b
+SHELL32_SHA=b7f179e3d64e7a04098bd1b0f28ce45d59eb253d6d358b038583afdbf56d9b1e
 WIBO=wibo-i686
 WIBO_URL=https://github.com/decompals/wibo/releases/download/1.2.0/$WIBO
 WIBO_SHA=2575d3b0a2f408b2c2b0850db56f1af5d005a138394a6774eba77b6708ecc304
@@ -30,6 +34,7 @@ fetch() { # file url sha256
 }
 fetch $VS6 $VS6_URL $VS6_SHA
 fetch $SDK $SDK_URL $SDK_SHA
+fetch $SDK99 $SDK99_URL $SDK99_SHA
 fetch $WIBO $WIBO_URL $WIBO_SHA
 
 rm -rf "$TC"; mkdir -p "$W"
@@ -92,6 +97,14 @@ cp "$W"/sdk/WinMM_Lib.* "$TC/sdklib/winmm.lib"
 cp "$TC"/bin/LINK.EXE "$TC"/bin/CVTRES.EXE "$TC"/bin/MSPDB60.DLL "$TC/linkbin/"
 cp "$W"/sdk/Msvcrt_Dll.* "$TC/linkbin/msvcrt.dll"
 echo "$MSVCRT_SHA  $TC/linkbin/msvcrt.dll" | sha256sum -c --quiet
+
+# Platform SDK, September 1999: only its shell32 import library (D2gfx; SHAppBarMessage's hint as the original's).
+echo "unpacking shell32.lib of the September 1999 Platform SDK"
+7z e -y -bd -o"$W/cab99" "$DL/$SDK99" Setup/psdk-x86.13.cab >/dev/null
+cabextract -q -d "$W/sdk99" -F 'Shell32_Lib.*' "$W/cab99/psdk-x86.13.cab"
+mkdir -p "$TC/sdklib1999"
+cp "$W"/sdk99/Shell32_Lib.* "$TC/sdklib1999/shell32.lib"
+echo "$SHELL32_SHA  $TC/sdklib1999/shell32.lib" | sha256sum -c --quiet
 rm -rf "$W"
 
 # A Wine prefix for the linker (no Mono/Gecko prompts).

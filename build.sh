@@ -4,7 +4,7 @@ set -e
 case "$D2SERVER_DLL" in ''|/*) ;; *) D2SERVER_DLL=$(pwd)/$D2SERVER_DLL ;; esac
 cd "$(dirname "$0")"
 T="sh $(pwd)/tools/msvc.sh"
-mkdir -p out/D2Net out/D2Lang out/D2MCPClient out/D2Gdi out/D2DDraw out/D2sound out/D2Launch out/D2Multi out/D2Glide out/D2Direct3D out/D2Game out/D2Common out/D2MultiLAN out/Bnclient out/Fog out/D2Server
+mkdir -p out/D2Net out/D2Lang out/D2MCPClient out/D2Gdi out/D2DDraw out/D2sound out/D2Launch out/D2Multi out/D2Glide out/D2Direct3D out/D2Game out/D2Common out/D2MultiLAN out/Bnclient out/Fog out/D2gfx out/D2Server
 
 # D2Net.dll
 cd D2Net
@@ -336,6 +336,26 @@ LINK_TIME="2000-05-26 18:52:04" $T link /nologo /DLL /INCREMENTAL:YES /BASE:0x10
 cp $O/Fog.dll ../out/Fog.dll
 cd ..
 
+# D2gfx.dll
+cd D2gfx
+O=../out/D2gfx
+C="$T cl /nologo /c /Gr /Oy /Gy /Gf /MT /W3 /I. /I../include /Fo$O/"
+$C /O2 /Ob2 CmnInfo.cpp CmnSubtile.cpp D2gfxName.cpp D2gfx.cpp ScaleDraw.cpp ScalePalette.cpp ScaleText.cpp \
+	ScaleZoom.cpp Scale.cpp ScaleCel.cpp ScaleWall.cpp Window.cpp
+$C /O1 /Ob2 /GX HellReport.cpp D2gfxMisc.cpp
+$C /O1 /Ob2 HellWindow.cpp
+for m in Storm Fog; do $T lib /nologo /def:lib/$m.def /machine:ix86 /out:$O/$m.lib >/dev/null; done
+rm -f $O/D2Hell.lib
+$T lib /nologo /out:$O/D2Hell.lib $O/HellReport.obj $O/D2gfxMisc.obj $O/HellWindow.obj >/dev/null
+rm -f $O/D2gfx.ilk ../out/D2gfx.dll
+LINK_TIME="2000-05-26 18:53:03" $T link /nologo /DLL /INCREMENTAL:YES /BASE:0x10000000 /MACHINE:IX86 \
+	/DEF:D2gfx.def /OUT:$O/D2gfx.dll $O/CmnInfo.obj $O/CmnSubtile.obj $O/D2gfxName.obj $O/D2gfx.obj \
+	$O/ScaleDraw.obj $O/ScalePalette.obj $O/ScaleText.obj $O/ScaleZoom.obj $O/Scale.obj $O/ScaleCel.obj \
+	$O/ScaleWall.obj $O/Window.obj $O/Storm.lib $O/D2Hell.lib $O/Fog.lib kernel32.lib user32.lib gdi32.lib \
+	../toolchain/sdklib1999/shell32.lib
+cp $O/D2gfx.dll ../out/D2gfx.dll
+cd ..
+
 # D2Server.dll (its icon is read from an original D2Server.dll: D2SERVER_DLL=<file> sh build.sh)
 if [ -n "$D2SERVER_DLL" ]; then
 cd D2Server
@@ -378,6 +398,7 @@ d403adb406b93c76c8c0d1bea131b648754fca3a8337120314bfe3e0f6e3b06c  out/D2sound.dl
 45b2a54d4108cba651a0de5fa165cf99e10be110352bff566b4c30d0cf3aa2d6  out/D2MultiLAN.dll
 5903adc1db1ce25efe5d8609dca9e67430668a5b2035f8cde7a57b28eb9a3cb9  out/Bnclient.dll
 1c6c1bd1b2fd0ede64dd8035a36bc4f69a3872198268f998ca2bbdd7ae7d8be6  out/Fog.dll
+ad23ccc059f07e1cbdef14e30d2ab0ce35d708d6e73af7a35e89d9bea9d08aec  out/D2gfx.dll
 EOF
 [ -n "$D2SERVER_DLL" ] || { echo "out/D2Server.dll: not built (set D2SERVER_DLL)"; exit 0; }
 echo "ccaaeb7800376991482e74f4e0e2c01f16088a197d45d38f39eb16ee50c2513b  out/D2Server.dll" | sha256sum -c

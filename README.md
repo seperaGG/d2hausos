@@ -21,6 +21,7 @@ here once its build matches the original; the modules so far:
 | `D2MultiLAN.dll` | 119,112 | `45b2a54d4108cba651a0de5fa165cf99e10be110352bff566b4c30d0cf3aa2d6` |
 | `Bnclient.dll` | 159,744 | `5903adc1db1ce25efe5d8609dca9e67430668a5b2035f8cde7a57b28eb9a3cb9` |
 | `Fog.dll` | 204,800 | `1c6c1bd1b2fd0ede64dd8035a36bc4f69a3872198268f998ca2bbdd7ae7d8be6` |
+| `D2gfx.dll` | 135,168 | `ad23ccc059f07e1cbdef14e30d2ab0ce35d708d6e73af7a35e89d9bea9d08aec` |
 | `D2Server.dll` | 184,320 | `ccaaeb7800376991482e74f4e0e2c01f16088a197d45d38f39eb16ee50c2513b` |
 
 ## Requirements
@@ -33,7 +34,7 @@ Debian/Ubuntu: `sudo apt install wine wine32:i386 faketime python3 curl p7zip-fu
 ## Build
 
 ```sh
-sh setup.sh     # one time: downloads ~820 MB, unpacks the toolchain into toolchain/
+sh setup.sh     # one time: downloads ~1.5 GB, unpacks the toolchain into toolchain/
 sh build.sh     # builds every module into out/ and checks each sha256
 ```
 
@@ -52,16 +53,18 @@ modules are built and D2Server is skipped.
 |---|---|---|
 | Visual Studio 6.0 Enterprise, disc 1 (cl 12.00.8168, link 6.00.8168) | <https://archive.org/download/X04-62912/1999-02_X04-62912_X04-62912_VSE60I_01.7z> | `7bb1ce5bdd40d3e899371b62b8828d7a400f292346e73d5ecd1c5e9da355a348` |
 | Platform SDK, April 2000 (headers, system import libraries, msvcrt.dll) | <https://archive.org/download/x05-74598_0600_Platform_SDK_April2000_Edition.iso.7z/x05-74598_0600_Platform_SDK_April2000_Edition.iso.7z> | `d997b70fac386e46cfde7f509747869f5887cb87b88d09fb3495ee7096b6778f` |
+| Platform SDK, September 1999 (MSDN October 1999 disc 6; only its shell32.lib, for D2gfx) | <https://archive.org/download/msdn-disc6-october-1999-x05-05207/1_PLATSDK.iso> | `6ebf3a588079468faded09f1877296887e1d18d26a4298caabfb26a0fce1221b` |
 | wibo 1.2.0 (runs cl and lib on Linux) | <https://github.com/decompals/wibo/releases/download/1.2.0/wibo-i686> | `2575d3b0a2f408b2c2b0850db56f1af5d005a138394a6774eba77b6708ecc304` |
 
 Item pages: <https://archive.org/details/X04-62912>,
-<https://archive.org/details/x05-74598_0600_Platform_SDK_April2000_Edition.iso.7z> (a torrent is offered there too).
+<https://archive.org/details/x05-74598_0600_Platform_SDK_April2000_Edition.iso.7z> (a torrent is offered there too),
+<https://archive.org/details/msdn-disc6-october-1999-x05-05207>.
 
 ## Contents
 
 | path | what |
 |---|---|
-| `D2Net/`, `D2Lang/`, `D2MCPClient/`, `D2Gdi/`, `D2DDraw/`, `D2sound/`, `D2Launch/`, `D2Multi/`, `D2Glide/`, `D2Direct3D/`, `D2Game/`, `D2Common/`, `D2MultiLAN/`, `Bnclient/`, `Fog/`, `D2Server/` | one directory per module: the source, export `.def` files, and `lib/*.def` for the import libraries of the game DLLs it calls (D2Gdi, D2DDraw, D2Glide and D2Direct3D also have `lib/mklonglib.py` and `lib/*.exports`, which write their old-format smackw32.lib, binkw32.lib and glide3x.lib; D2Launch has `lib/D2WinSyms.c`, the symbols its D2Win.lib is built from; D2Common and D2Server have `hell/`, the D2Hell static library's files; D2Common has `lib/renobj.py` and `lib/selfnames.txt`, which rename symbols in copies of its objects before the link; D2MultiLAN has `lib/coffpad.py`, which pads the debug data of its objects before the link; Bnclient has `Bnclient.rc`, its resource (a dialog); D2Server has `D2Server.rc`, its resources, and `lib/mkico.py`, which reads the icon) |
+| `D2Net/`, `D2Lang/`, `D2MCPClient/`, `D2Gdi/`, `D2DDraw/`, `D2sound/`, `D2Launch/`, `D2Multi/`, `D2Glide/`, `D2Direct3D/`, `D2Game/`, `D2Common/`, `D2MultiLAN/`, `Bnclient/`, `Fog/`, `D2gfx/`, `D2Server/` | one directory per module: the source, export `.def` files, and `lib/*.def` for the import libraries of the game DLLs it calls (D2Gdi, D2DDraw, D2Glide and D2Direct3D also have `lib/mklonglib.py` and `lib/*.exports`, which write their old-format smackw32.lib, binkw32.lib and glide3x.lib; D2Launch has `lib/D2WinSyms.c`, the symbols its D2Win.lib is built from; D2Common and D2Server have `hell/`, the D2Hell static library's files (D2gfx's three are HellReport.cpp, D2gfxMisc.cpp and HellWindow.cpp); D2Common has `lib/renobj.py` and `lib/selfnames.txt`, which rename symbols in copies of its objects before the link; D2MultiLAN has `lib/coffpad.py`, which pads the debug data of its objects before the link; Bnclient has `Bnclient.rc`, its resource (a dialog); D2Server has `D2Server.rc`, its resources, and `lib/mkico.py`, which reads the icon) |
 | `include/` | headers shared by the modules |
 | `setup.sh` | makes `toolchain/` from the downloads |
 | `build.sh` | compiles and links every module |
