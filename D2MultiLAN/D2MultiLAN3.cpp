@@ -147,25 +147,25 @@ static int __stdcall sJoinGameNameCallback(void *pvEdit, int nPos, char *pchKey)
 	return TRUE;
 }
 
-#define ENABLE_OK_BY_NAME(hEdit, hOKButton, nSize) \
-	{ \
-		char szName[nSize]; \
-		const Unicode *pwszName; \
-		BOOL fEnable; \
-		pwszName = D2WinEditBoxGetString(hEdit); \
-		fEnable = FALSE; \
-		if (pwszName) \
-		{ \
-			Unicode::toUtf(szName, pwszName, nSize - 1); \
-			if (strlen(szName) >= 1) \
-				fEnable = TRUE; \
-		} \
-		D2WinChildSetEnabled(hOKButton, fEnable); \
+template <int nSize> struct TOkByName {
+	static void Enable(HCHILDDATA *phEdit, HCHILDDATA *phOKButton)
+	{
+		char szName[nSize];
+		const Unicode *pwszName = D2WinEditBoxGetString(*phEdit);
+		BOOL fEnable = FALSE;
+		if (pwszName)
+		{
+			Unicode::toUtf(szName, pwszName, nSize - 1);
+			if (strlen(szName) >= 1)
+				fEnable = TRUE;
+		}
+		D2WinChildSetEnabled(*phOKButton, fEnable);
 	}
+};
 
 static int __stdcall sJoinGameNamePostCallback(_PARAMS *ptParams)
 {
-	ENABLE_OK_BY_NAME(sghJoinGameName, sghJoinGameOKButton, 256);
+	TOkByName<256>::Enable(&sghJoinGameName, &sghJoinGameOKButton);
 	return TRUE;
 }
 
@@ -333,7 +333,7 @@ static int __stdcall sCreateGameNameCallback(void *pvEdit, int nPos, char *pchKe
 
 static int __stdcall sCreateGameNamePostCallback(_PARAMS *ptParams)
 {
-	ENABLE_OK_BY_NAME(sghCreateGameName, sghCreateGameOKButton, 16);
+	TOkByName<16>::Enable(&sghCreateGameName, &sghCreateGameOKButton);
 	return TRUE;
 }
 

@@ -19,6 +19,8 @@ here once its build matches the original; the modules so far:
 | `D2Game.dll` | 802,816 | `695024b9f2c9f0e9446a1b224d823d4a8d5f9424b6cc314953f01a5a34eaebc4` |
 | `D2Common.dll` | 724,992 | `6e8b73325ec6b885213ecc9a98017ec5cf6d6984ff4a2735c73a3f3595e0544c` |
 | `D2MultiLAN.dll` | 119,112 | `45b2a54d4108cba651a0de5fa165cf99e10be110352bff566b4c30d0cf3aa2d6` |
+| `Bnclient.dll` | 159,744 | `5903adc1db1ce25efe5d8609dca9e67430668a5b2035f8cde7a57b28eb9a3cb9` |
+| `Fog.dll` | 204,800 | `1c6c1bd1b2fd0ede64dd8035a36bc4f69a3872198268f998ca2bbdd7ae7d8be6` |
 | `D2Server.dll` | 184,320 | `ccaaeb7800376991482e74f4e0e2c01f16088a197d45d38f39eb16ee50c2513b` |
 
 ## Requirements
@@ -59,7 +61,7 @@ Item pages: <https://archive.org/details/X04-62912>,
 
 | path | what |
 |---|---|
-| `D2Net/`, `D2Lang/`, `D2MCPClient/`, `D2Gdi/`, `D2DDraw/`, `D2sound/`, `D2Launch/`, `D2Multi/`, `D2Glide/`, `D2Direct3D/`, `D2Game/`, `D2Common/`, `D2MultiLAN/`, `D2Server/` | one directory per module: the source, export `.def` files, and `lib/*.def` for the import libraries of the game DLLs it calls (D2Gdi, D2DDraw, D2Glide and D2Direct3D also have `lib/mklonglib.py` and `lib/*.exports`, which write their old-format smackw32.lib, binkw32.lib and glide3x.lib; D2Launch has `lib/D2WinSyms.c`, the symbols its D2Win.lib is built from; D2Common and D2Server have `hell/`, the D2Hell static library's files; D2Common has `lib/renobj.py` and `lib/selfnames.txt`, which rename symbols in copies of its objects before the link; D2MultiLAN has `lib/coffpad.py`, which pads the debug data of its objects before the link; D2Server has `D2Server.rc`, its resources, and `lib/mkico.py`, which reads the icon) |
+| `D2Net/`, `D2Lang/`, `D2MCPClient/`, `D2Gdi/`, `D2DDraw/`, `D2sound/`, `D2Launch/`, `D2Multi/`, `D2Glide/`, `D2Direct3D/`, `D2Game/`, `D2Common/`, `D2MultiLAN/`, `Bnclient/`, `Fog/`, `D2Server/` | one directory per module: the source, export `.def` files, and `lib/*.def` for the import libraries of the game DLLs it calls (D2Gdi, D2DDraw, D2Glide and D2Direct3D also have `lib/mklonglib.py` and `lib/*.exports`, which write their old-format smackw32.lib, binkw32.lib and glide3x.lib; D2Launch has `lib/D2WinSyms.c`, the symbols its D2Win.lib is built from; D2Common and D2Server have `hell/`, the D2Hell static library's files; D2Common has `lib/renobj.py` and `lib/selfnames.txt`, which rename symbols in copies of its objects before the link; D2MultiLAN has `lib/coffpad.py`, which pads the debug data of its objects before the link; Bnclient has `Bnclient.rc`, its resource (a dialog); D2Server has `D2Server.rc`, its resources, and `lib/mkico.py`, which reads the icon) |
 | `include/` | headers shared by the modules |
 | `setup.sh` | makes `toolchain/` from the downloads |
 | `build.sh` | compiles and links every module |

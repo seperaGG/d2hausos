@@ -1,0 +1,3 @@
+LIBRARY Bnclient
+EXPORTS
+    QueryInterface=?QueryInterface_Impl@@YAPAUBNCLIENTINTERFACE@@XZ @1

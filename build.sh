@@ -4,7 +4,7 @@ set -e
 case "$D2SERVER_DLL" in ''|/*) ;; *) D2SERVER_DLL=$(pwd)/$D2SERVER_DLL ;; esac
 cd "$(dirname "$0")"
 T="sh $(pwd)/tools/msvc.sh"
-mkdir -p out/D2Net out/D2Lang out/D2MCPClient out/D2Gdi out/D2DDraw out/D2sound out/D2Launch out/D2Multi out/D2Glide out/D2Direct3D out/D2Game out/D2Common out/D2MultiLAN out/D2Server
+mkdir -p out/D2Net out/D2Lang out/D2MCPClient out/D2Gdi out/D2DDraw out/D2sound out/D2Launch out/D2Multi out/D2Glide out/D2Direct3D out/D2Game out/D2Common out/D2MultiLAN out/Bnclient out/Fog out/D2Server
 
 # D2Net.dll
 cd D2Net
@@ -298,6 +298,44 @@ rm -f ../out/D2MultiLAN.dll
 cp "$W/D2MultiLAN.dll" ../out/D2MultiLAN.dll
 python3 -c 'import sys; f = open(sys.argv[1], "r+b"); f.seek(0x1d005); f.write(b"\\D2")' ../out/D2MultiLAN.dll
 cd ..
+
+# Bnclient.dll
+cd Bnclient
+O=../out/Bnclient
+C="$T cl /nologo /c /Gr /Oy /Gy /Gf /MT /W3 /I. /I../include /Fo$O/"
+$C /O2 /Ob2 BnChatName.cpp BnclientMisc.cpp BnMessQueue.cpp BNetGW.cpp BnDownload.cpp grid.cpp BnSend.cpp \
+	BnConnect.cpp GridCrypt.cpp BnCDKey.cpp BnRegister.cpp CACHE.cpp BnName.cpp
+$C /O2 /Ob1 BnConnMsg.cpp GridSha.cpp
+for m in Storm D2CMP D2Lang Fog; do $T lib /nologo /def:lib/$m.def /machine:ix86 /out:$O/$m.lib >/dev/null; done
+$T rc /fo $O/Bnclient.res Bnclient.rc >/dev/null
+rm -f $O/Bnclient.ilk ../out/Bnclient.dll
+LINK_TIME="2000-05-26 18:55:22" $T link /nologo /DLL /INCREMENTAL:YES /BASE:0x10000000 /MACHINE:IX86 \
+	/DEF:Bnclient.def /OUT:$O/Bnclient.dll $O/BnChatName.obj $O/BnConnect.obj $O/BnConnMsg.obj $O/BnDownload.obj \
+	$O/BNetGW.obj $O/BnMessQueue.obj $O/BnCDKey.obj $O/BnRegister.obj $O/BnSend.obj $O/CACHE.obj $O/BnName.obj \
+	$O/BnclientMisc.obj $O/grid.obj $O/GridCrypt.obj $O/GridSha.obj $O/Storm.lib $O/D2CMP.lib wsock32.lib \
+	$O/D2Lang.lib $O/Fog.lib kernel32.lib user32.lib $O/Bnclient.res
+cp $O/Bnclient.dll ../out/Bnclient.dll
+cd ..
+
+# Fog.dll
+cd Fog
+O=../out/Fog
+C="$T cl /nologo /c /Gr /Oy /Gy /Gf /MT /W3 /I. /I../include /Fo$O/"
+$C /O2 /Ob2 String/FogString.cpp BitManip/StringPack.cpp BitManip/StringHash.cpp FogMain.cpp D2QSQueue.cpp \
+	DataArrays.cpp BitManip/BitManip.cpp FogTime.cpp FogSystem.cpp AsyncData.cpp FogCpu.cpp D2QSSocket.cpp \
+	FogTrig.cpp QServer/QServer98.cpp QServer/QServerNT.cpp Mem/MemStub.cpp Mem/Performance.cpp Safesock.cpp \
+	QServer/QServer.cpp
+$C /O2 /Ob1 Mem/mem.cpp ErrorManager.cpp
+$T lib /nologo /def:lib/Storm.def /machine:ix86 /out:$O/Storm.lib >/dev/null
+rm -f $O/Fog.ilk ../out/Fog.dll
+LINK_TIME="2000-05-26 18:52:04" $T link /nologo /DLL /INCREMENTAL:YES /BASE:0x10000000 /MACHINE:IX86 \
+	/DEF:Fog.def /OUT:$O/Fog.dll $O/FogMain.obj $O/D2QSQueue.obj $O/D2QSSocket.obj $O/FogTrig.obj $O/BitManip.obj \
+	$O/StringPack.obj $O/StringHash.obj $O/FogString.obj $O/QServer.obj $O/QServer98.obj $O/QServerNT.obj $O/mem.obj \
+	$O/MemStub.obj $O/Performance.obj $O/FogTime.obj $O/FogSystem.obj $O/AsyncData.obj $O/FogCpu.obj \
+	$O/DataArrays.obj $O/ErrorManager.obj $O/Safesock.obj $O/Storm.lib wsock32.lib kernel32.lib user32.lib
+cp $O/Fog.dll ../out/Fog.dll
+cd ..
+
 # D2Server.dll (its icon is read from an original D2Server.dll: D2SERVER_DLL=<file> sh build.sh)
 if [ -n "$D2SERVER_DLL" ]; then
 cd D2Server
@@ -338,6 +376,8 @@ d403adb406b93c76c8c0d1bea131b648754fca3a8337120314bfe3e0f6e3b06c  out/D2sound.dl
 695024b9f2c9f0e9446a1b224d823d4a8d5f9424b6cc314953f01a5a34eaebc4  out/D2Game.dll
 6e8b73325ec6b885213ecc9a98017ec5cf6d6984ff4a2735c73a3f3595e0544c  out/D2Common.dll
 45b2a54d4108cba651a0de5fa165cf99e10be110352bff566b4c30d0cf3aa2d6  out/D2MultiLAN.dll
+5903adc1db1ce25efe5d8609dca9e67430668a5b2035f8cde7a57b28eb9a3cb9  out/Bnclient.dll
+1c6c1bd1b2fd0ede64dd8035a36bc4f69a3872198268f998ca2bbdd7ae7d8be6  out/Fog.dll
 EOF
 [ -n "$D2SERVER_DLL" ] || { echo "out/D2Server.dll: not built (set D2SERVER_DLL)"; exit 0; }
 echo "ccaaeb7800376991482e74f4e0e2c01f16088a197d45d38f39eb16ee50c2513b  out/D2Server.dll" | sha256sum -c
