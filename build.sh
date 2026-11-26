@@ -2,9 +2,10 @@
 # Build the Diablo II 1.00 modules byte-identical to the originals into out/, and check each sha256.
 set -e
 case "$D2SERVER_DLL" in ''|/*) ;; *) D2SERVER_DLL=$(pwd)/$D2SERVER_DLL ;; esac
+case "$D2VIDTST_EXE" in ''|/*) ;; *) D2VIDTST_EXE=$(pwd)/$D2VIDTST_EXE ;; esac
 cd "$(dirname "$0")"
 T="sh $(pwd)/tools/msvc.sh"
-mkdir -p out/D2Net out/D2Lang out/D2MCPClient out/D2Gdi out/D2DDraw out/D2sound out/D2Launch out/D2Multi out/D2Glide out/D2Direct3D out/D2Game out/D2Common out/D2MultiLAN out/Bnclient out/Fog out/D2gfx out/D2Server
+mkdir -p out/D2Net out/D2Lang out/D2MCPClient out/D2Gdi out/D2DDraw out/D2sound out/D2Launch out/D2Multi out/D2Glide out/D2Direct3D out/D2Game out/D2Common out/D2MultiLAN out/Bnclient out/Fog out/D2gfx out/D2Server out/D2VidTst
 
 # D2Net.dll
 cd D2Net
@@ -382,6 +383,29 @@ cp $O/D2Server.dll ../out/D2Server.dll
 cd ..
 fi
 
+# D2VidTst.exe (its icon is read from an original D2VidTst.exe: D2VIDTST_EXE=<file> sh build.sh)
+if [ -n "$D2VIDTST_EXE" ]; then
+cd D2VidTst
+O=../out/D2VidTst
+F="/nologo /c /Gr /Oy /Gy /Gf /MT /GX /W3 /I. /I../include /Fo$O/"
+$T cl $F /O1 /Ob2 HellReport.cpp HellWindow.cpp
+$T cl-sp3 $F /O2 D2VidTstMisc.cpp VidTstD3D.cpp VidTstDDraw.cpp VidTstGlide.cpp
+$T cl-sp3 $F /O1 /Ob2 HellFault.cpp
+for m in Storm Fog; do $T lib /nologo /def:lib/$m.def /machine:ix86 /out:$O/$m.lib >/dev/null; done
+rm -f $O/D2Hell.lib
+$T lib /nologo /out:$O/D2Hell.lib $O/HellReport.obj $O/HellFault.obj $O/HellWindow.obj >/dev/null
+python3 lib/mkico.py "$D2VIDTST_EXE" $O
+$T rc /i $O /fo $O/D2VidTst.res D2VidTst.rc >/dev/null
+$T cvtres-sp3 /nologo /readonly /machine:ix86 /out:$O/D2VidTst.rbj $O/D2VidTst.res >/dev/null
+rm -f ../out/D2VidTst.exe
+LINK_TIME="2000-05-04 18:41:02" $T link /nologo /INCREMENTAL:NO /SUBSYSTEM:WINDOWS /MACHINE:IX86 \
+	/OUT:$O/D2VidTst.exe $O/D2VidTstMisc.obj $O/VidTstD3D.obj $O/VidTstDDraw.obj $O/VidTstGlide.obj $O/Storm.lib \
+	$O/D2Hell.lib dxguid.lib $O/Fog.lib ../toolchain/sdklib1999/ddraw.lib libcmt.lib user32.lib gdi32.lib \
+	kernel32.lib advapi32.lib $O/D2VidTst.rbj
+cp $O/D2VidTst.exe ../out/D2VidTst.exe
+cd ..
+fi
+
 sha256sum -c <<EOF
 7876cc8dfe779102f1218a5c7352a6962c95e366ddd524e454332faf9554d0fc  out/D2Net.dll
 74ae0debb325048a1ae76f8360f5a826203fa3627fc02f8a62aaa3ae0d305a4b  out/D2Lang.dll
@@ -400,5 +424,13 @@ d403adb406b93c76c8c0d1bea131b648754fca3a8337120314bfe3e0f6e3b06c  out/D2sound.dl
 1c6c1bd1b2fd0ede64dd8035a36bc4f69a3872198268f998ca2bbdd7ae7d8be6  out/Fog.dll
 ad23ccc059f07e1cbdef14e30d2ab0ce35d708d6e73af7a35e89d9bea9d08aec  out/D2gfx.dll
 EOF
-[ -n "$D2SERVER_DLL" ] || { echo "out/D2Server.dll: not built (set D2SERVER_DLL)"; exit 0; }
-echo "ccaaeb7800376991482e74f4e0e2c01f16088a197d45d38f39eb16ee50c2513b  out/D2Server.dll" | sha256sum -c
+if [ -n "$D2SERVER_DLL" ]; then
+	echo "ccaaeb7800376991482e74f4e0e2c01f16088a197d45d38f39eb16ee50c2513b  out/D2Server.dll" | sha256sum -c
+else
+	echo "out/D2Server.dll: not built (set D2SERVER_DLL)"
+fi
+if [ -n "$D2VIDTST_EXE" ]; then
+	echo "2c3d08db2d9595a4b2f3462e53be571436a70c9d883abdb008b170e8d95ecc26  out/D2VidTst.exe" | sha256sum -c
+else
+	echo "out/D2VidTst.exe: not built (set D2VIDTST_EXE)"
+fi

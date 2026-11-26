@@ -1,0 +1,96 @@
+#include <windows.h>
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+101 DIALOG DISCARDABLE 0, 0, 300, 130
+STYLE 0x90c00ac2L
+CAPTION "Warning Caption."
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "&Run Test", 1, "Button", 0x00010001L, 56, 106, 49, 17
+    CONTROL         "&Skip Test", 4, "Button", 0x00010000L, 122, 106, 49, 17
+    CONTROL         "&Cancel", 2, "Button", 0x00010000L, 188, 106, 49, 17
+    CONTROL         "Warning Text.", 1000, "Static", 0x00020000L, 7, 7, 286, 94
+END
+
+102 DIALOG DISCARDABLE 0, 0, 300, 220
+STYLE 0x90c00ac2L
+CAPTION "caption"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "&OK", 1, "Button", 0x00010001L, 59, 203, 50, 14
+    CONTROL         "this is where the video card name goes", 1006, "Button", 0x00002009L, 8, 19, 109, 33
+    CONTROL         "", 1007, "Button", 0x00002009L, 8, 87, 109, 33
+    CONTROL         "", 1008, "Button", 0x00002009L, 8, 155, 109, 33
+    CONTROL         "", 1009, "Button", 0x00002009L, 8, 53, 109, 33
+    CONTROL         "", 1010, "Button", 0x00002009L, 8, 121, 109, 33
+    CONTROL         "info", 1011, "Static", 0x00020000L, 130, 57, 170, 160
+    CONTROL         "success or fail message", 1012, "Static", 0x00020000L, 130, 0, 170, 51
+    CONTROL         "vid modes or no vid modes", 1021, "Button", 0x00000007L, 0, 7, 123, 189
+END
+
+104 DIALOG DISCARDABLE 0, 0, 300, 120
+STYLE 0x90c00bd2L
+CAPTION "Running Caption."
+FONT 10, "System"
+BEGIN
+    CONTROL         "Running Text", 1016, "Static", 0x0083010cL, 26, 16, 243, 89
+END
+
+105 DIALOG DISCARDABLE 0, 0, 300, 184
+STYLE 0x90c00ac2L
+CAPTION "caption"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "&OK", 1, "Button", 0x00010001L, 125, 163, 50, 14
+    CONTROL         "Test DirectDraw", 1017, "Button", 0x00010003L, 20, 144, 83, 10
+    CONTROL         "Test Direct3D", 1018, "Button", 0x00010003L, 111, 144, 83, 10
+    CONTROL         "Test Glide", 1019, "Button", 0x00010003L, 202, 144, 83, 10
+    CONTROL         "static caption", 1020, "Static", 0x00020000L, 20, 6, 255, 122
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    3, "Video Test detected an old,  incorrect, or unsupported version of DirectX on this computer."
+    4, "Video Test detected an older version of DirectX on this computer."
+    5, "Diablo II Setup will now check your video system for compatibility with Diablo II.  This test takes about 30 seconds.  During the test, the screen will go black a few times.\n\nIf after 30 seconds you don't see on your screen the message 'Video Test Completed', please reboot your computer, and run the test again from the options menu.\n\nIf you run any remote control software, such as Timbuktu or pcAnyWhere, you must disable it before running this test.\n"
+    6, "Diablo II Setup - Video Test"
+    7, "Video Test did not detect any useable video modes."
+    11, "This computer can run Diablo II.\n\nWe recommend using the %s video mode.\n\n"
+    12, "Video Test Completed"
+    13, "THIS COMPUTER CANNOT RUN Diablo II !\n\n%s\nPlease update your system software as follows:\n\n"
+    14, "Your computer appears to have the wrong version of Microsoft DirectX installed.  You should end this test and update your system software as follows:\n\n%s\n%s\n\nWould you like to continue this test anyway?\n"
+    15, "Old DirectX Version Detected!"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    17, "Please select a mode from the Available Video Modes box on the left.  If your preferred video mode is missing, then you must update your video card drivers as follows:\n\n%s\n%s"
+    18, "Low color warning!"
+    19, "Warning: your display appears to be running in less than 256 color mode.  You must run in at least 256 color mode for this test to function correctly.  You should cancel this test, change to a higher color mode, reboot, and then rerun this test.  Would you like to continue with testing anyway?"
+    20, "VideoTest - Running"
+    21, "Please wait while Video Test is running.\n"
+    22, "Video Test is now examining your hardware.\n"
+    23, "Video Test is now testing DirectDraw.\n"
+    24, "Video Test is now testing Direct3D.\n"
+    25, "Video Test is now testing 3dfx Glide.\n"
+    27, "You do not have access to the system registry.\nThe most common cause of this situation is that you are not an administrator for this system.\nYou may now choose from previously detected modes (if any) for this system.\nIf you would like to test for other modes, you must have administrator privileges for this machine, including write permissions for the system registry."
+    28, "Video Test - Unable to access system registry."
+    29, "%s\n%s"
+    30, "The Video Test is already running.  If it previously crashed, you may need to reboot before running it again."
+    31, "Video Test Already Running."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    32, "A previous attempt to run the Video Test crashed."
+    33, "A previous attempt to run the Video Test crashed due to the mode(s) shown below.  Please make sure you have followed these instructions:\n%s\n%s\nIf you have, you can check the box next to the mode(s) which failed to test them again, or you can continue to run video test without testing the mode(s) if you prefer."
+    34, "On Windows 95, 98 or 2000:\n1) Install DirectX 6.1a or newer (DirectX 7a is included with this CD)\n2) Install current video drivers matching the version of DirectX you have installed.\n"
+    35, "Windows NT4:\n1) Install the latest service pack.\n2) Install current video drivers.\n"
+    36, "In all situations, reboot your computer after installing new system software.  After you have completed these steps, run the Video Test (in the Options section) again.\n "
+    37, "Available Video Modes"
+    38, "No Video Modes Found!"
+    39, "\nClick 'Skip Test' to skip the Video Test, and go directly to the Available Video Modes selection."
+END
+
+104 ICON DISCARDABLE "D2VidTst104.ico"

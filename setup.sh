@@ -1,5 +1,5 @@
 #!/bin/sh
-# One-time setup: download the four files listed in README.md (or use copies already in downloads/) and unpack
+# One-time setup: download the five files listed in README.md (or use copies already in downloads/) and unpack
 # the toolchain into toolchain/. Needs: curl, 7z, cabextract, python3, wine (with 32-bit support).
 set -e
 cd "$(dirname "$0")"
@@ -18,6 +18,12 @@ SDK99=1_PLATSDK.iso
 SDK99_URL=https://archive.org/download/msdn-disc6-october-1999-x05-05207/$SDK99
 SDK99_SHA=6ebf3a588079468faded09f1877296887e1d18d26a4298caabfb26a0fce1221b
 SHELL32_SHA=b7f179e3d64e7a04098bd1b0f28ce45d59eb253d6d358b038583afdbf56d9b1e
+DDRAW99_SHA=d6eace55370ea0ba59acf6b5abe000a8b5c6d2f0935baa2650bb57949fea9801
+SP3=msvc6.3.tar.gz
+SP3_URL=https://github.com/OmniBlade/decomp.me/releases/download/msvcwin9x/$SP3
+SP3_SHA=84f73e718b3671bfd5de3b7764622b07633b572ee826ca3b77602d224c128608
+C2SP3_SHA=a0cc45f83fd0ed009aa4f43df5598105a1049ad9675de0b1089be7cce7d3c153
+CVTRESSP3_SHA=83b602ed8e69e979fc9557f482a4a4c6c9a97b4ad67b879aedeacd2b09e5b20b
 WIBO=wibo-i686
 WIBO_URL=https://github.com/decompals/wibo/releases/download/1.2.0/$WIBO
 WIBO_SHA=2575d3b0a2f408b2c2b0850db56f1af5d005a138394a6774eba77b6708ecc304
@@ -36,6 +42,7 @@ fetch $VS6 $VS6_URL $VS6_SHA
 fetch $SDK $SDK_URL $SDK_SHA
 fetch $SDK99 $SDK99_URL $SDK99_SHA
 fetch $WIBO $WIBO_URL $WIBO_SHA
+fetch $SP3 $SP3_URL $SP3_SHA
 
 rm -rf "$TC"; mkdir -p "$W"
 
@@ -98,13 +105,29 @@ cp "$TC"/bin/LINK.EXE "$TC"/bin/CVTRES.EXE "$TC"/bin/MSPDB60.DLL "$TC/linkbin/"
 cp "$W"/sdk/Msvcrt_Dll.* "$TC/linkbin/msvcrt.dll"
 echo "$MSVCRT_SHA  $TC/linkbin/msvcrt.dll" | sha256sum -c --quiet
 
-# Platform SDK, September 1999: only its shell32 import library (D2gfx; SHAppBarMessage's hint as the original's).
-echo "unpacking shell32.lib of the September 1999 Platform SDK"
-7z e -y -bd -o"$W/cab99" "$DL/$SDK99" Setup/psdk-x86.13.cab >/dev/null
+# Platform SDK, September 1999: only its shell32 import library (D2gfx; SHAppBarMessage's hint as the original's)
+# and its ddraw import library (D2VidTst; the hints as the original's).
+echo "unpacking shell32.lib and ddraw.lib of the September 1999 Platform SDK"
+7z e -y -bd -o"$W/cab99" "$DL/$SDK99" Setup/psdk-x86.13.cab Setup/psdk-x86.10.cab >/dev/null
 cabextract -q -d "$W/sdk99" -F 'Shell32_Lib.*' "$W/cab99/psdk-x86.13.cab"
+cabextract -q -d "$W/sdk99" -F 'ddraw_Lib.*' "$W/cab99/psdk-x86.10.cab"
 mkdir -p "$TC/sdklib1999"
 cp "$W"/sdk99/Shell32_Lib.* "$TC/sdklib1999/shell32.lib"
+cp "$W"/sdk99/ddraw_Lib.* "$TC/sdklib1999/ddraw.lib"
 echo "$SHELL32_SHA  $TC/sdklib1999/shell32.lib" | sha256sum -c --quiet
+echo "$DDRAW99_SHA  $TC/sdklib1999/ddraw.lib" | sha256sum -c --quiet
+
+# Visual C++ 6.0 SP3's back end (c2.dll 12.00.8447) and cvtres (5.00.1736), for D2VidTst: binsp3 is a copy of
+# bin with SP3's C2.DLL (cl and c1xx stay RTM) and SP3's CVTRES.EXE.
+echo "unpacking the VC6 SP3 back end and cvtres"
+mkdir -p "$W/sp3"
+tar -xzf "$DL/$SP3" -C "$W/sp3" Bin/c2.dll Bin/CVTRES.EXE
+echo "$C2SP3_SHA  $W/sp3/Bin/c2.dll" | sha256sum -c --quiet
+echo "$CVTRESSP3_SHA  $W/sp3/Bin/CVTRES.EXE" | sha256sum -c --quiet
+cp -r "$TC/bin" "$TC/binsp3"
+rm -f "$TC/binsp3/C2.DLL" "$TC/binsp3/CVTRES.EXE"
+cp "$W/sp3/Bin/c2.dll" "$TC/binsp3/C2.DLL"
+cp "$W/sp3/Bin/CVTRES.EXE" "$TC/binsp3/CVTRES.EXE"
 rm -rf "$W"
 
 # A Wine prefix for the linker (no Mono/Gecko prompts).

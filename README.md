@@ -23,6 +23,7 @@ here once its build matches the original; the modules so far:
 | `Fog.dll` | 204,800 | `1c6c1bd1b2fd0ede64dd8035a36bc4f69a3872198268f998ca2bbdd7ae7d8be6` |
 | `D2gfx.dll` | 135,168 | `ad23ccc059f07e1cbdef14e30d2ab0ce35d708d6e73af7a35e89d9bea9d08aec` |
 | `D2Server.dll` | 184,320 | `ccaaeb7800376991482e74f4e0e2c01f16088a197d45d38f39eb16ee50c2513b` |
+| `D2VidTst.exe` | 98,304 | `2c3d08db2d9595a4b2f3462e53be571436a70c9d883abdb008b170e8d95ecc26` |
 
 ## Requirements
 
@@ -44,6 +45,9 @@ sh build.sh     # builds every module into out/ and checks each sha256
 Diablo II 1.00 to take the icon from: `D2SERVER_DLL=/path/to/D2Server.dll sh build.sh`. Without it the other
 modules are built and D2Server is skipped.
 
+`D2VidTst.exe` likewise holds an icon that is not part of this repository: `D2VIDTST_EXE=/path/to/D2VidTst.exe`
+(Diablo II 1.00's) builds it; without it D2VidTst is skipped. Both can be given at once.
+
 ## Downloads
 
 `setup.sh` fetches these and checks their sha256. If a download fails (archive.org is sometimes slow or returns
@@ -53,8 +57,9 @@ modules are built and D2Server is skipped.
 |---|---|---|
 | Visual Studio 6.0 Enterprise, disc 1 (cl 12.00.8168, link 6.00.8168) | <https://archive.org/download/X04-62912/1999-02_X04-62912_X04-62912_VSE60I_01.7z> | `7bb1ce5bdd40d3e899371b62b8828d7a400f292346e73d5ecd1c5e9da355a348` |
 | Platform SDK, April 2000 (headers, system import libraries, msvcrt.dll) | <https://archive.org/download/x05-74598_0600_Platform_SDK_April2000_Edition.iso.7z/x05-74598_0600_Platform_SDK_April2000_Edition.iso.7z> | `d997b70fac386e46cfde7f509747869f5887cb87b88d09fb3495ee7096b6778f` |
-| Platform SDK, September 1999 (MSDN October 1999 disc 6; only its shell32.lib, for D2gfx) | <https://archive.org/download/msdn-disc6-october-1999-x05-05207/1_PLATSDK.iso> | `6ebf3a588079468faded09f1877296887e1d18d26a4298caabfb26a0fce1221b` |
+| Platform SDK, September 1999 (MSDN October 1999 disc 6; only its shell32.lib, for D2gfx, and ddraw.lib, for D2VidTst) | <https://archive.org/download/msdn-disc6-october-1999-x05-05207/1_PLATSDK.iso> | `6ebf3a588079468faded09f1877296887e1d18d26a4298caabfb26a0fce1221b` |
 | wibo 1.2.0 (runs cl and lib on Linux) | <https://github.com/decompals/wibo/releases/download/1.2.0/wibo-i686> | `2575d3b0a2f408b2c2b0850db56f1af5d005a138394a6774eba77b6708ecc304` |
+| Visual C++ 6.0 SP3 back end and cvtres (c2.dll 12.00.8447, cvtres 5.00.1736; decomp.me's msvc6.3 package, for D2VidTst) | <https://github.com/OmniBlade/decomp.me/releases/download/msvcwin9x/msvc6.3.tar.gz> | `84f73e718b3671bfd5de3b7764622b07633b572ee826ca3b77602d224c128608` |
 
 Item pages: <https://archive.org/details/X04-62912>,
 <https://archive.org/details/x05-74598_0600_Platform_SDK_April2000_Edition.iso.7z> (a torrent is offered there too),
@@ -64,12 +69,12 @@ Item pages: <https://archive.org/details/X04-62912>,
 
 | path | what |
 |---|---|
-| `D2Net/`, `D2Lang/`, `D2MCPClient/`, `D2Gdi/`, `D2DDraw/`, `D2sound/`, `D2Launch/`, `D2Multi/`, `D2Glide/`, `D2Direct3D/`, `D2Game/`, `D2Common/`, `D2MultiLAN/`, `Bnclient/`, `Fog/`, `D2gfx/`, `D2Server/` | one directory per module: the source, export `.def` files, and `lib/*.def` for the import libraries of the game DLLs it calls (D2Gdi, D2DDraw, D2Glide and D2Direct3D also have `lib/mklonglib.py` and `lib/*.exports`, which write their old-format smackw32.lib, binkw32.lib and glide3x.lib; D2Launch has `lib/D2WinSyms.c`, the symbols its D2Win.lib is built from; D2Common and D2Server have `hell/`, the D2Hell static library's files (D2gfx's three are HellReport.cpp, D2gfxMisc.cpp and HellWindow.cpp); D2Common has `lib/renobj.py` and `lib/selfnames.txt`, which rename symbols in copies of its objects before the link; D2MultiLAN has `lib/coffpad.py`, which pads the debug data of its objects before the link; Bnclient has `Bnclient.rc`, its resource (a dialog); D2Server has `D2Server.rc`, its resources, and `lib/mkico.py`, which reads the icon) |
+| `D2Net/`, `D2Lang/`, `D2MCPClient/`, `D2Gdi/`, `D2DDraw/`, `D2sound/`, `D2Launch/`, `D2Multi/`, `D2Glide/`, `D2Direct3D/`, `D2Game/`, `D2Common/`, `D2MultiLAN/`, `Bnclient/`, `Fog/`, `D2gfx/`, `D2Server/`, `D2VidTst/` | one directory per module: the source, export `.def` files, and `lib/*.def` for the import libraries of the game DLLs it calls (D2Gdi, D2DDraw, D2Glide and D2Direct3D also have `lib/mklonglib.py` and `lib/*.exports`, which write their old-format smackw32.lib, binkw32.lib and glide3x.lib; D2Launch has `lib/D2WinSyms.c`, the symbols its D2Win.lib is built from; D2Common and D2Server have `hell/`, the D2Hell static library's files (D2gfx's three are HellReport.cpp, D2gfxMisc.cpp and HellWindow.cpp); D2Common has `lib/renobj.py` and `lib/selfnames.txt`, which rename symbols in copies of its objects before the link; D2MultiLAN has `lib/coffpad.py`, which pads the debug data of its objects before the link; Bnclient has `Bnclient.rc`, its resource (a dialog); D2Server has `D2Server.rc`, its resources, and `lib/mkico.py`, which reads the icon; D2VidTst, an exe, has `D2VidTst.rc` and `lib/mkico.py` likewise, and D2Hell's three files HellReport.cpp, HellFault.cpp and HellWindow.cpp) |
 | `include/` | headers shared by the modules |
 | `setup.sh` | makes `toolchain/` from the downloads |
 | `build.sh` | compiles and links every module |
 | `LICENSE` | MIT License |
-| `tools/msvc.sh` | runs `cl`/`lib` under wibo and `link`/`rc` under Wine, with the linker on a fixed clock so it writes the original timestamps |
+| `tools/msvc.sh` | runs `cl`/`lib` (and `cl-sp3`/`cvtres-sp3`, VC6 SP3's back end and cvtres) under wibo and `link`/`rc` under Wine, with the linker on a fixed clock so it writes the original timestamps |
 | `tools/sdk-include.py` | rebuilds the SDK's header directory from its cabinet files |
 
 `toolchain/`, `downloads/` and `out/` are created by the scripts and are not part of the repository.

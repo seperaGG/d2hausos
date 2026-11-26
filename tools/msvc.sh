@@ -1,6 +1,7 @@
 #!/bin/sh
 # Run a Visual C++ 6.0 RTM tool from ../toolchain (made by ../setup.sh):
-#   tools/msvc.sh cl|lib|link|rc <arguments>
+#   tools/msvc.sh cl|lib|link|rc|cl-sp3|cvtres-sp3 <arguments>
+# cl-sp3: cl with VC6 SP3's back end (c2.dll 12.00.8447; toolchain/binsp3), cvtres-sp3: SP3's cvtres 5.00.1736.
 # cl and lib run under wibo, rc under Wine. link runs under Wine, because wibo cannot do an incremental link, and on Microsoft's
 # msvcrt.dll, because Wine's own qsort orders the import table differently.
 # LINK_TIME="YYYY-MM-DD hh:mm:ss" (UTC) runs the linker on a frozen clock (libfaketime), so it writes the
@@ -13,6 +14,8 @@ case $tool in
 	lib)  exe=LIB.EXE ;;
 	link) exe=LINK.EXE ;;
 	rc)   exe=RC.EXE ;;
+	cl-sp3)     exe=CL.EXE ;;
+	cvtres-sp3) exe=CVTRES.EXE ;;
 	*) echo "msvc.sh: unknown tool $tool" >&2; exit 2 ;;
 esac
 if [ "$tool" = rc ]; then
@@ -22,6 +25,7 @@ if [ "$tool" = rc ]; then
 fi
 if [ "$tool" != link ]; then
 	export INCLUDE="$TC/sdkinclude;$TC/include" LIB="$TC/sdklib;$TC/lib"
+	case $tool in *-sp3) exec "$TC/wibo" "$TC/binsp3/$exe" "$@" ;; esac
 	exec "$TC/wibo" "$TC/bin/$exe" "$@"
 fi
 export WINEPREFIX=$TC/wineprefix WINEDEBUG=-all
