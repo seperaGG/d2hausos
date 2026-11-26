@@ -1,0 +1,8 @@
+LIBRARY D2Sound
+EXPORTS
+    @D2soundOrdinal10039@4 @10039 NONAME
+    @D2soundOrdinal10070@4 @10070 NONAME
+    @D2soundOrdinal10034@4 @10034 NONAME
+    D2soundOrdinal10065 @10065 NONAME
+    D2soundOrdinal10069 @10069 NONAME
+    D2soundOrdinal10066 @10066 NONAME

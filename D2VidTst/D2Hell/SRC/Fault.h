@@ -1,5 +1,5 @@
-#ifndef D2RE_D2VIDTST_HELLFAULT_H
-#define D2RE_D2VIDTST_HELLFAULT_H
+#ifndef D2RE_D2VIDTST_FAULT_H
+#define D2RE_D2VIDTST_FAULT_H
 
 typedef BOOL (__stdcall *PFNMESSAGESOURCE)(DWORD dwError, char *pszBuffer, int nSize);
 typedef void (__stdcall *PFNASSERTHOOK)(const char *pszFile, int nLine,

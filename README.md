@@ -22,6 +22,7 @@ here once its build matches the original; the modules so far:
 | `Bnclient.dll` | 159,744 | `5903adc1db1ce25efe5d8609dca9e67430668a5b2035f8cde7a57b28eb9a3cb9` |
 | `Fog.dll` | 204,800 | `1c6c1bd1b2fd0ede64dd8035a36bc4f69a3872198268f998ca2bbdd7ae7d8be6` |
 | `D2gfx.dll` | 135,168 | `ad23ccc059f07e1cbdef14e30d2ab0ce35d708d6e73af7a35e89d9bea9d08aec` |
+| `D2Win.dll` | 196,608 | `0f64dc8bb63d9962face3426d78d645b6b581f33d090d5f9304ae81b23fa0b8c` |
 | `D2Server.dll` | 184,320 | `ccaaeb7800376991482e74f4e0e2c01f16088a197d45d38f39eb16ee50c2513b` |
 | `D2VidTst.exe` | 98,304 | `2c3d08db2d9595a4b2f3462e53be571436a70c9d883abdb008b170e8d95ecc26` |
 
@@ -60,6 +61,7 @@ modules are built and D2Server is skipped.
 | Platform SDK, September 1999 (MSDN October 1999 disc 6; only its shell32.lib, for D2gfx, and ddraw.lib, for D2VidTst) | <https://archive.org/download/msdn-disc6-october-1999-x05-05207/1_PLATSDK.iso> | `6ebf3a588079468faded09f1877296887e1d18d26a4298caabfb26a0fce1221b` |
 | wibo 1.2.0 (runs cl and lib on Linux) | <https://github.com/decompals/wibo/releases/download/1.2.0/wibo-i686> | `2575d3b0a2f408b2c2b0850db56f1af5d005a138394a6774eba77b6708ecc304` |
 | Visual C++ 6.0 SP3 back end and cvtres (c2.dll 12.00.8447, cvtres 5.00.1736; decomp.me's msvc6.3 package, for D2VidTst) | <https://github.com/OmniBlade/decomp.me/releases/download/msvcwin9x/msvc6.3.tar.gz> | `84f73e718b3671bfd5de3b7764622b07633b572ee826ca3b77602d224c128608` |
+| Intel JPEG Library 1.1 import library `ijl11.lib` (1999-08-05, Intel's redistributable; for D2Win) | <https://raw.githubusercontent.com/Dragon-Raja-Server/Client/f98d0bb049d4d1e607afcdedbcab1b2826ec1c0c/ijl11.lib> | `ba187eb00a12d0d90593cbcd994686a618ab7839f1599f7ab7d16ddc9c3d16b6` |
 
 Item pages: <https://archive.org/details/X04-62912>,
 <https://archive.org/details/x05-74598_0600_Platform_SDK_April2000_Edition.iso.7z> (a torrent is offered there too),
@@ -69,7 +71,7 @@ Item pages: <https://archive.org/details/X04-62912>,
 
 | path | what |
 |---|---|
-| `D2Net/`, `D2Lang/`, `D2MCPClient/`, `D2Gdi/`, `D2DDraw/`, `D2sound/`, `D2Launch/`, `D2Multi/`, `D2Glide/`, `D2Direct3D/`, `D2Game/`, `D2Common/`, `D2MultiLAN/`, `Bnclient/`, `Fog/`, `D2gfx/`, `D2Server/`, `D2VidTst/` | one directory per module: the source, export `.def` files, and `lib/*.def` for the import libraries of the game DLLs it calls (D2Gdi, D2DDraw, D2Glide and D2Direct3D also have `lib/mklonglib.py` and `lib/*.exports`, which write their old-format smackw32.lib, binkw32.lib and glide3x.lib; D2Launch has `lib/D2WinSyms.c`, the symbols its D2Win.lib is built from; D2Common and D2Server have `hell/`, the D2Hell static library's files (D2gfx's three are HellReport.cpp, D2gfxMisc.cpp and HellWindow.cpp); D2Common has `lib/renobj.py` and `lib/selfnames.txt`, which rename symbols in copies of its objects before the link; D2MultiLAN has `lib/coffpad.py`, which pads the debug data of its objects before the link; Bnclient has `Bnclient.rc`, its resource (a dialog); D2Server has `D2Server.rc`, its resources, and `lib/mkico.py`, which reads the icon; D2VidTst, an exe, has `D2VidTst.rc` and `lib/mkico.py` likewise, and D2Hell's three files HellReport.cpp, HellFault.cpp and HellWindow.cpp) |
+| `D2Net/`, `D2Lang/`, `D2MCPClient/`, `D2Gdi/`, `D2DDraw/`, `D2sound/`, `D2Launch/`, `D2Multi/`, `D2Glide/`, `D2Direct3D/`, `D2Game/`, `D2Common/`, `D2MultiLAN/`, `Bnclient/`, `Fog/`, `D2gfx/`, `D2Win/`, `D2Server/`, `D2VidTst/` | one directory per module: the source, export `.def` files, and `lib/*.def` for the import libraries of the game DLLs it calls (D2Gdi, D2DDraw, D2Glide and D2Direct3D also have `lib/mklonglib.py` and `lib/*.exports`, which write their old-format smackw32.lib, binkw32.lib and glide3x.lib; D2Launch has `lib/D2WinSyms.c`, the symbols its D2Win.lib is built from; D2Common and D2Server have `hell/`, the D2Hell static library's files (D2gfx's three are HellReport.cpp, D2gfxMisc.cpp and HellWindow.cpp; D2Win's two HellArchive.cpp and HellBits.cpp); D2Win has `lib/D2gfxSyms.c`, the symbols its D2gfx.lib is built from; D2Common has `lib/renobj.py` and `lib/selfnames.txt`, which rename symbols in copies of its objects before the link; D2MultiLAN has `lib/coffpad.py`, which pads the debug data of its objects before the link; Bnclient has `Bnclient.rc`, its resource (a dialog); D2Server has `D2Server.rc`, its resources, and `lib/mkico.py`, which reads the icon; D2VidTst, an exe, has `D2VidTst.rc` and `lib/mkico.py` likewise, and D2Hell's three files under `D2Hell/SRC/`: Fault.cpp, Window.cpp (the original's names) and Report.cpp) |
 | `include/` | headers shared by the modules |
 | `setup.sh` | makes `toolchain/` from the downloads |
 | `build.sh` | compiles and links every module |
@@ -82,8 +84,8 @@ Item pages: <https://archive.org/details/X04-62912>,
 ## License and disclaimer
 
 The source code and scripts in this folder are released under the MIT License; see [`LICENSE`](LICENSE). The
-license covers only this project's own files. It does not cover the Microsoft tools and SDK that `setup.sh`
-downloads, nor any Diablo II game files, which remain the property of their respective owners.
+license covers only this project's own files. It does not cover the Microsoft tools and SDK and Intel's `ijl11.lib` that
+`setup.sh` downloads, nor any Diablo II game files, which remain the property of their respective owners.
 
 Diablo II Hausos is an unofficial, fan-made project. It is not affiliated with, endorsed, sponsored or approved by
 Blizzard Entertainment, Inc. Diablo, Diablo II, Blizzard and Blizzard Entertainment are trademarks or registered

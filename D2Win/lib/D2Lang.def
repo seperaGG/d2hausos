@@ -1,0 +1,50 @@
+LIBRARY D2Lang
+EXPORTS
+    ?unicode2Win@Unicode@@SIPADPADPBU1@H@Z
+    ?toUnicode@Unicode@@SIPAU1@PAU1@PBDH@Z
+    ?strlen@Unicode@@SIHPBU1@@Z
+    ?strcat@Unicode@@SIPAU1@PAU1@PBU1@@Z
+    ?win2Unicode@Unicode@@SIPAU1@PAU1@PBDH@Z
+    ?strcpy@Unicode@@SIPAU1@PAU1@PBU1@@Z
+    ??_FUnicode@@QAEXXZ
+    ?sprintf@Unicode@@SAXHPAU1@PBU1@ZZ
+    @D2LangOrdinal10004@4 @10004 NONAME
+    ?strncpy@Unicode@@SIPAU1@PAU1@PBU1@H@Z
+    D2LangOrdinal10007 @10007 NONAME
+    ?strnicmp@Unicode@@SIHPBU1@0I@Z
+    ??0Unicode@@QAE@G@Z DATA
+    ??4Unicode@@QAEAAU0@ABU0@@Z DATA
+    ??BUnicode@@QBEGXZ DATA
+    ?_toLowerTable@Unicode@@0PAGA DATA
+    ?_toUpperTable@Unicode@@0PAGA DATA
+    ?compare@Unicode@@QBEHU1@@Z DATA
+    ?compare@Unicode@@SIHU1@0@Z DATA
+    ?directionality@Unicode@@QAE?AW4Direction@1@XZ DATA
+    ?isASCII@Unicode@@QBEHXZ DATA
+    ?isAlpha@Unicode@@QBEHXZ DATA
+    ?isLeftToRight@Unicode@@QBEHXZ DATA
+    ?isLineBreak@Unicode@@SIHPBU1@I@Z DATA
+    ?isNewline@Unicode@@QBEHXZ DATA
+    ?isPipe@Unicode@@QBEHXZ DATA
+    ?isWhitespace@Unicode@@QBEHXZ DATA
+    ?isWordEnd@Unicode@@SIHPBU1@I@Z DATA
+    ?loadSysMap@Unicode@@SIHPAUHD2ARCHIVE__@@PBD@Z DATA
+    ?strchr@Unicode@@SIPAU1@PBU1@U1@@Z DATA
+    ?strcmp@Unicode@@SIHPBU1@0@Z DATA
+    ?strcoll@Unicode@@SIHPBU1@0@Z DATA
+    ?stricmp@Unicode@@SIHPBU1@0@Z DATA
+    ?strncat@Unicode@@SIPAU1@PAU1@PBU1@H@Z DATA
+    ?strncoll@Unicode@@SIHPBU1@0H@Z DATA
+    ?strstr@Unicode@@SIPBU1@PBU1@0@Z DATA
+    ?strstri@Unicode@@SIPBU1@PBU1@0@Z DATA
+    ?sys2Unicode@Unicode@@SIPAU1@PAU1@PBDH@Z DATA
+    ?sysWidth@Unicode@@SIKPBU1@H@Z DATA
+    ?toLower@Unicode@@QBE?AU1@XZ DATA
+    ?toUpper@Unicode@@QBE?AU1@XZ DATA
+    ?toUtf@Unicode@@SIPADPADPBU1@H@Z DATA
+    ?unicode2Sys@Unicode@@SIPADPADPBU1@H@Z DATA
+    ?unicodeWidth@Unicode@@SIKPBDH@Z DATA
+    ?unicodenwidth@Unicode@@SIIPBDH@Z DATA
+    ?unloadSysMap@Unicode@@SIXXZ DATA
+    ?utfnwidth@Unicode@@SIIPBU1@H@Z DATA
+    ?utfwidth@Unicode@@QBEHXZ DATA

@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include "D2VidTstHell.h"
 #include "StormImports.h"
-#include "HellFault.h"
+#include "Fault.h"
 
 static CRITICAL_SECTION sgtMessageSourceLock;
 static TSExplicitList<TMESSAGESOURCE, 0> sgtMessageSources;

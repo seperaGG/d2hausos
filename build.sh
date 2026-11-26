@@ -5,7 +5,7 @@ case "$D2SERVER_DLL" in ''|/*) ;; *) D2SERVER_DLL=$(pwd)/$D2SERVER_DLL ;; esac
 case "$D2VIDTST_EXE" in ''|/*) ;; *) D2VIDTST_EXE=$(pwd)/$D2VIDTST_EXE ;; esac
 cd "$(dirname "$0")"
 T="sh $(pwd)/tools/msvc.sh"
-mkdir -p out/D2Net out/D2Lang out/D2MCPClient out/D2Gdi out/D2DDraw out/D2sound out/D2Launch out/D2Multi out/D2Glide out/D2Direct3D out/D2Game out/D2Common out/D2MultiLAN out/Bnclient out/Fog out/D2gfx out/D2Server out/D2VidTst
+mkdir -p out/D2Net out/D2Lang out/D2MCPClient out/D2Gdi out/D2DDraw out/D2sound out/D2Launch out/D2Multi out/D2Glide out/D2Direct3D out/D2Game out/D2Common out/D2MultiLAN out/Bnclient out/Fog out/D2gfx out/D2Win out/D2Server out/D2VidTst
 
 # D2Net.dll
 cd D2Net
@@ -357,6 +357,30 @@ LINK_TIME="2000-05-26 18:53:03" $T link /nologo /DLL /INCREMENTAL:YES /BASE:0x10
 cp $O/D2gfx.dll ../out/D2gfx.dll
 cd ..
 
+# D2Win.dll
+cd D2Win
+O=../out/D2Win
+C="$T cl /nologo /c /Gr /Oy /Gy /Gf /MT /W3 /I. /I../include /Fo$O/"
+$C /O2 /Ob2 D2WinProgressBar.cpp D2WRegister.cpp D2WinTimer.cpp D2WinPopup.cpp D2WinSmack.cpp D2WinAccountList.cpp \
+	D2WinImage.cpp D2WinPalette.cpp D2WinScrollbar.cpp D2WinArchive.cpp D2WinButton.cpp D2WinDll.cpp D2WinList.cpp \
+	D2WinTextBox.cpp D2WinEditBox.cpp D2WinFont.cpp D2WinMain.cpp D2Comp.cpp D2WinAnimImage.cpp
+$C /O1 /Ob2 HellArchive.cpp HellBits.cpp
+$T cl /nologo /c /Fo$O/D2gfxSyms.obj lib/D2gfxSyms.c >/dev/null
+$T lib /nologo /def:lib/D2gfx.def /machine:ix86 /out:$O/D2gfx.lib $O/D2gfxSyms.obj >/dev/null
+for m in Storm D2CMP D2Lang Fog D2Sound; do $T lib /nologo /def:lib/$m.def /machine:ix86 /out:$O/$m.lib >/dev/null; done
+rm -f $O/D2Hell.lib
+$T lib /nologo /out:$O/D2Hell.lib $O/HellArchive.obj $O/HellBits.obj >/dev/null
+rm -f $O/D2Win.ilk ../out/D2Win.dll
+LINK_TIME="2000-05-26 18:55:04" $T link /nologo /DLL /INCREMENTAL:YES /BASE:0x10000000 /MACHINE:IX86 \
+	/DEF:D2Win.def /OUT:$O/D2Win.dll $O/D2Comp.obj $O/D2WinAccountList.obj $O/D2WinAnimImage.obj \
+	$O/D2WinArchive.obj $O/D2WinButton.obj $O/D2WinDll.obj $O/D2WinEditBox.obj $O/D2WinFont.obj $O/D2WinImage.obj \
+	$O/D2WinList.obj $O/D2WinMain.obj $O/D2WinPalette.obj $O/D2WinPopup.obj $O/D2WinProgressBar.obj \
+	$O/D2WinScrollbar.obj $O/D2WinSmack.obj $O/D2WinTextBox.obj $O/D2WinTimer.obj $O/D2WRegister.obj $O/Storm.lib \
+	$O/D2CMP.lib ../toolchain/ijl11/ijl11.lib $O/D2Hell.lib $O/D2gfx.lib $O/D2Lang.lib $O/Fog.lib kernel32.lib \
+	user32.lib $O/D2Sound.lib
+cp $O/D2Win.dll ../out/D2Win.dll
+cd ..
+
 # D2Server.dll (its icon is read from an original D2Server.dll: D2SERVER_DLL=<file> sh build.sh)
 if [ -n "$D2SERVER_DLL" ]; then
 cd D2Server
@@ -388,12 +412,12 @@ if [ -n "$D2VIDTST_EXE" ]; then
 cd D2VidTst
 O=../out/D2VidTst
 F="/nologo /c /Gr /Oy /Gy /Gf /MT /GX /W3 /I. /I../include /Fo$O/"
-$T cl $F /O1 /Ob2 HellReport.cpp HellWindow.cpp
+$T cl $F /O1 /Ob2 D2Hell/SRC/Report.cpp D2Hell/SRC/Window.cpp
 $T cl-sp3 $F /O2 D2VidTstMisc.cpp VidTstD3D.cpp VidTstDDraw.cpp VidTstGlide.cpp
-$T cl-sp3 $F /O1 /Ob2 HellFault.cpp
+$T cl-sp3 $F /O1 /Ob2 D2Hell/SRC/Fault.cpp
 for m in Storm Fog; do $T lib /nologo /def:lib/$m.def /machine:ix86 /out:$O/$m.lib >/dev/null; done
 rm -f $O/D2Hell.lib
-$T lib /nologo /out:$O/D2Hell.lib $O/HellReport.obj $O/HellFault.obj $O/HellWindow.obj >/dev/null
+$T lib /nologo /out:$O/D2Hell.lib $O/Report.obj $O/Fault.obj $O/Window.obj >/dev/null
 python3 lib/mkico.py "$D2VIDTST_EXE" $O
 $T rc /i $O /fo $O/D2VidTst.res D2VidTst.rc >/dev/null
 $T cvtres-sp3 /nologo /readonly /machine:ix86 /out:$O/D2VidTst.rbj $O/D2VidTst.res >/dev/null
@@ -423,6 +447,7 @@ d403adb406b93c76c8c0d1bea131b648754fca3a8337120314bfe3e0f6e3b06c  out/D2sound.dl
 5903adc1db1ce25efe5d8609dca9e67430668a5b2035f8cde7a57b28eb9a3cb9  out/Bnclient.dll
 1c6c1bd1b2fd0ede64dd8035a36bc4f69a3872198268f998ca2bbdd7ae7d8be6  out/Fog.dll
 ad23ccc059f07e1cbdef14e30d2ab0ce35d708d6e73af7a35e89d9bea9d08aec  out/D2gfx.dll
+0f64dc8bb63d9962face3426d78d645b6b581f33d090d5f9304ae81b23fa0b8c  out/D2Win.dll
 EOF
 if [ -n "$D2SERVER_DLL" ]; then
 	echo "ccaaeb7800376991482e74f4e0e2c01f16088a197d45d38f39eb16ee50c2513b  out/D2Server.dll" | sha256sum -c

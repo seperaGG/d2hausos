@@ -1,5 +1,5 @@
 #!/bin/sh
-# One-time setup: download the five files listed in README.md (or use copies already in downloads/) and unpack
+# One-time setup: download the six files listed in README.md (or use copies already in downloads/) and unpack
 # the toolchain into toolchain/. Needs: curl, 7z, cabextract, python3, wine (with 32-bit support).
 set -e
 cd "$(dirname "$0")"
@@ -24,6 +24,9 @@ SP3_URL=https://github.com/OmniBlade/decomp.me/releases/download/msvcwin9x/$SP3
 SP3_SHA=84f73e718b3671bfd5de3b7764622b07633b572ee826ca3b77602d224c128608
 C2SP3_SHA=a0cc45f83fd0ed009aa4f43df5598105a1049ad9675de0b1089be7cce7d3c153
 CVTRESSP3_SHA=83b602ed8e69e979fc9557f482a4a4c6c9a97b4ad67b879aedeacd2b09e5b20b
+IJL11=ijl11.lib
+IJL11_URL=https://raw.githubusercontent.com/Dragon-Raja-Server/Client/f98d0bb049d4d1e607afcdedbcab1b2826ec1c0c/$IJL11
+IJL11_SHA=ba187eb00a12d0d90593cbcd994686a618ab7839f1599f7ab7d16ddc9c3d16b6
 WIBO=wibo-i686
 WIBO_URL=https://github.com/decompals/wibo/releases/download/1.2.0/$WIBO
 WIBO_SHA=2575d3b0a2f408b2c2b0850db56f1af5d005a138394a6774eba77b6708ecc304
@@ -43,6 +46,7 @@ fetch $SDK $SDK_URL $SDK_SHA
 fetch $SDK99 $SDK99_URL $SDK99_SHA
 fetch $WIBO $WIBO_URL $WIBO_SHA
 fetch $SP3 $SP3_URL $SP3_SHA
+fetch $IJL11 $IJL11_URL $IJL11_SHA
 
 rm -rf "$TC"; mkdir -p "$W"
 
@@ -129,6 +133,10 @@ rm -f "$TC/binsp3/C2.DLL" "$TC/binsp3/CVTRES.EXE"
 cp "$W/sp3/Bin/c2.dll" "$TC/binsp3/C2.DLL"
 cp "$W/sp3/Bin/CVTRES.EXE" "$TC/binsp3/CVTRES.EXE"
 rm -rf "$W"
+
+# Intel's IJL 1.1 import library (1999), for D2Win: LINK 6.00-made long-format members, as the original linked.
+mkdir -p "$TC/ijl11"
+cp "$DL/$IJL11" "$TC/ijl11/ijl11.lib"
 
 # A Wine prefix for the linker (no Mono/Gecko prompts).
 echo "creating Wine prefix"
