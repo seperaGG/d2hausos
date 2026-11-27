@@ -5,7 +5,7 @@ case "$D2SERVER_DLL" in ''|/*) ;; *) D2SERVER_DLL=$(pwd)/$D2SERVER_DLL ;; esac
 case "$D2VIDTST_EXE" in ''|/*) ;; *) D2VIDTST_EXE=$(pwd)/$D2VIDTST_EXE ;; esac
 cd "$(dirname "$0")"
 T="sh $(pwd)/tools/msvc.sh"
-mkdir -p out/D2Net out/D2Lang out/D2MCPClient out/D2Gdi out/D2DDraw out/D2sound out/D2Launch out/D2Multi out/D2Glide out/D2Direct3D out/D2Game out/D2Common out/D2MultiLAN out/Bnclient out/Fog out/D2gfx out/D2Win out/D2Server out/D2VidTst
+mkdir -p out/D2Net out/D2Lang out/D2MCPClient out/D2Gdi out/D2DDraw out/D2sound out/D2Launch out/D2Multi out/D2Glide out/D2Direct3D out/D2Game out/D2Common out/D2MultiLAN out/Bnclient out/Fog out/D2gfx out/D2Win out/D2CMP out/D2Server out/D2VidTst
 
 # D2Net.dll
 cd D2Net
@@ -381,6 +381,28 @@ LINK_TIME="2000-05-26 18:55:04" $T link /nologo /DLL /INCREMENTAL:YES /BASE:0x10
 cp $O/D2Win.dll ../out/D2Win.dll
 cd ..
 
+# D2CMP.dll
+cd D2CMP
+O=../out/D2CMP
+C="$T cl /nologo /c /Gr /Oy /Gy /Gf /MT /W3 /I. /I../include /FID2CMPLinkNames.h /Fo$O/"
+$C /O2 /Ob2 /GX CelCmp.cpp
+$C /O2 /Ob2 CelDataHash.cpp Codec.cpp Count.cpp D2CMP.cpp DrwCntxt.cpp FastCmp.cpp FindTiles.cpp GfxHash.cpp \
+	LRUCache.cpp Palette.cpp PalShift.cpp Raw.cpp SpriteCache.cpp SubTile.cpp TileCache.cpp Tilecmp.cpp TileLib.cpp \
+	TileProjects.cpp
+$C /O1 /Ob2 Archive.cpp D2CmpMisc.cpp
+$T cl /nologo /c /Gr /Oy /Gy /Gf /MT /W3 /O2 /Ob2 /Fo$O/ lib/ImageFit1.cpp lib/ImageFit2.cpp
+for m in Fog Storm; do $T lib /nologo /def:lib/$m.def /machine:ix86 /out:$O/$m.lib >/dev/null; done
+rm -f $O/D2Hell.lib
+$T lib /nologo /out:$O/D2Hell.lib $O/D2CmpMisc.obj $O/Archive.obj >/dev/null
+rm -f $O/D2CMP.ilk ../out/D2CMP.dll
+LINK_TIME="2000-05-26 18:52:50" $T link /nologo /DLL /INCREMENTAL:YES /BASE:0x10000000 /MACHINE:IX86 \
+	/DEF:D2CMP.def /OUT:$O/D2CMP.dll $O/CelCmp.obj $O/CelDataHash.obj $O/Codec.obj $O/Count.obj $O/D2CMP.obj \
+	$O/DrwCntxt.obj $O/FastCmp.obj $O/FindTiles.obj $O/GfxHash.obj $O/LRUCache.obj $O/Palette.obj $O/PalShift.obj \
+	$O/Raw.obj $O/SpriteCache.obj $O/SubTile.obj $O/TileCache.obj $O/Tilecmp.obj $O/TileLib.obj $O/TileProjects.obj \
+	$O/ImageFit1.obj $O/ImageFit2.obj $O/Storm.lib $O/Fog.lib $O/D2Hell.lib kernel32.lib user32.lib
+cp $O/D2CMP.dll ../out/D2CMP.dll
+cd ..
+
 # D2Server.dll (its icon is read from an original D2Server.dll: D2SERVER_DLL=<file> sh build.sh)
 if [ -n "$D2SERVER_DLL" ]; then
 cd D2Server
@@ -448,6 +470,7 @@ d403adb406b93c76c8c0d1bea131b648754fca3a8337120314bfe3e0f6e3b06c  out/D2sound.dl
 1c6c1bd1b2fd0ede64dd8035a36bc4f69a3872198268f998ca2bbdd7ae7d8be6  out/Fog.dll
 ad23ccc059f07e1cbdef14e30d2ab0ce35d708d6e73af7a35e89d9bea9d08aec  out/D2gfx.dll
 0f64dc8bb63d9962face3426d78d645b6b581f33d090d5f9304ae81b23fa0b8c  out/D2Win.dll
+160f6c255e4c66421639439464fe07fbec219713f70871016c757c88951cb2d1  out/D2CMP.dll
 EOF
 if [ -n "$D2SERVER_DLL" ]; then
 	echo "ccaaeb7800376991482e74f4e0e2c01f16088a197d45d38f39eb16ee50c2513b  out/D2Server.dll" | sha256sum -c

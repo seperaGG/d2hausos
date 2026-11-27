@@ -120,10 +120,10 @@ extern "C" __declspec(dllimport) DWORD gdwBitMasks[];
 #define FogErrorManagerWarnRaw FogOrdinal10023
 #define FogErrorManagerLog FogOrdinal10026
 #define FogAsyncDataLoadRaw FogOrdinal10066
-#define FogAsyncDataIsLoaded(ptAsyncData) ((BOOL)FogOrdinal10067((DWORD)(ptAsyncData), 0))
-#define FogAsyncDataGetBuffer(ptAsyncData) ((BYTE *)FogOrdinal10069((DWORD)(ptAsyncData), 0))
-#define FogAsyncDataGetSize(ptAsyncData) FogOrdinal10070((DWORD)(ptAsyncData), 0)
-#define FogAsyncDataFree(ptAsyncData) FogOrdinal10072((DWORD)(ptAsyncData), 0)
+#define FogAsyncDataIsLoaded(ptAsyncData) ((BOOL)((DWORD (__fastcall *)(DWORD))FogOrdinal10067)((DWORD)(ptAsyncData)))
+#define FogAsyncDataGetBuffer(ptAsyncData) ((BYTE *)((DWORD (__fastcall *)(DWORD))FogOrdinal10069)((DWORD)(ptAsyncData)))
+#define FogAsyncDataGetSize(ptAsyncData) ((DWORD (__fastcall *)(DWORD))FogOrdinal10070)((DWORD)(ptAsyncData))
+#define FogAsyncDataFree(ptAsyncData) ((DWORD (__fastcall *)(DWORD))FogOrdinal10072)((DWORD)(ptAsyncData))
 #define FogErrorManagerPoolAllocRaw FogOrdinal10140
 #define FogErrorManagerPoolFreeRaw FogOrdinal10141
 #define FogSafesockOpenStormFile(dwFileName, dwFileHandleOut) \
